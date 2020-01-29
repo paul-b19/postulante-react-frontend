@@ -5,9 +5,7 @@ const Request = (props) => {
 
   return (
     <Fragment>
-      <div className="">
 
-      </div>
       <label>Request title</label>
       <ul className="nav nav-pills">
         <li className="nav-item">
@@ -40,16 +38,24 @@ const Request = (props) => {
 
       <div className="btn-group btn-group-toggle" data-toggle="buttons">
         <label className="btn btn-outline-primary">
-          <input type="radio" name="params" autocomplete="off" checked="true" /> Params
+          <input type="radio" name="params" 
+                 onChange={props.handleTabChange} checked={props.tab === 'params'} />
+          Params
         </label>
         <label className="btn btn-outline-primary">
-          <input type="radio" name="authorization" autocomplete="off" /> Authorization
+          <input type="radio" name="authorization" 
+                 onChange={props.handleTabChange} checked={props.tab === 'authorization'} />
+          Authorization
         </label>
         <label className="btn btn-outline-primary">
-          <input type="radio" name="headers" autocomplete="off" /> Headers
+          <input type="radio" name="headers" 
+                 onChange={props.handleTabChange} checked={props.tab === 'headers'} />
+          Headers
         </label>
         <label className="btn btn-outline-primary">
-          <input type="radio" name="body" autocomplete="off" /> Body
+          <input type="radio" name="body" 
+                 onChange={props.handleTabChange} checked={props.tab === 'body'} />
+          Body
         </label>
       </div>
 

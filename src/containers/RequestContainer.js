@@ -4,9 +4,15 @@ import Request from '../components/Request'
 class RequestContainer extends React.Component {
 
   state = {
-    view: 'params'
+    tab: 'params' // 'authorization'/'headers'/'body'
   }
 
+  handleTabChange = (e) => {
+    console.log(e.target.name)
+    this.setState({
+      tab: e.target.name
+    })
+  }
 
 
   render () {
@@ -14,7 +20,8 @@ class RequestContainer extends React.Component {
     return (
       <div className="reqCont">
         <h3>Request Container</h3>
-        <Request />
+        <Request handleTabChange={this.handleTabChange}
+                 tab={this.state.tab}/>
       </div>
     )
   
