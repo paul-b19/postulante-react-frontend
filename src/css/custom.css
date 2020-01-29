@@ -12,7 +12,12 @@ body {
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.8rem 1.25rem;
+  padding: 0.3rem 1.25rem;
+  /* font-size: 1.2rem; */
+}
+
+.sidebar-heading {
+  padding: 0;
   /* font-size: 1.2rem; */
 }
 
@@ -41,4 +46,29 @@ body {
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+.logo-sidebar {
+  height: 37px;
+  width: auto;
+}
+
+.logo-about {
+  width: 40vmin;
+  height: auto;
+  border-radius: 15px;
+}
+
+.about {
+  padding: 5% 0% 5% 36%;
+}
+
+.reqCont, .respCont {
+  border: 3px black solid;
+  border-radius: 10px;
+  height: 40vh;
+}
+
+.url-input {
+  border: rgb(223,105,25) 0.2px solid;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-// import Logo from '../images/logo.png'
+import Logo from '../images/logo_flat.png'
 
 const About = () => {
   
@@ -13,21 +13,23 @@ const About = () => {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div className="modal-body">
-            <img className="login-logo" src="{Logo}" alt='Logo'/>
-            <div className="text-left">
+          <div className="modal-body text-center">
+            <img className="logo-about" src={Logo} alt='Logo'/>
+            <div className="about text-left">
               <h4><a href=""
                 target="_blank">Frontend</a></h4>
               <ul>
-                <li>React</li>
+                <li>React.js</li>
+                <li>Redux</li>
                 <li>Bootstrap</li>
+                <li>Heroku</li>
               </ul>
               <h4><a href=""
                 target="_blank">Backend</a></h4>
               <ul>
                 <li>Rails</li>
                 <li>PostgreSQL</li>
-                <li>Cloudmersive OCR API</li>
+                <li>Heroku</li>
               </ul>
               <h6>
                 Made by <a href="https://www.linkedin.com/in/pavel-beletsky/" target="_blank">Pavel Beletsky</a>.

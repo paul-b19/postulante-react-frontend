@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
-// import '../css/bootstrap.min.css'
-// import '../css/custom.css'
 import NavBar from '../components/NavBar'
 import About from '../components/About'
+import RequestContainer from '../containers/RequestContainer'
+import ResponseContainer from '../containers/ResponseContainer'
 
 
 class Application extends React.Component {
@@ -16,12 +16,10 @@ class Application extends React.Component {
         <div id="page-content-wrapper">
           <About />
           <NavBar />
-    
 
-    
-          <div className="container-fluid">
-            <h1 className="mt-4">Dashboard Container</h1>
-          </div>
+          <RequestContainer />
+          <ResponseContainer />
+
         </div>
       </Fragment>
     )
