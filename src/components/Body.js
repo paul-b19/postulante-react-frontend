@@ -9,13 +9,36 @@ const Body = (props) => {
   return (
     <Fragment>
       <h4>Body</h4>
+
+      <div className="btn-group btn-group-toggle" data-toggle="buttons">
+        <label className="btn btn-outline-primary">
+          <input type="radio" name="tabs" value="params" 
+                 onChange={props.handleTab} checked={props.tab === 'params'}
+                 onClick={props.handleTab} />
+          None
+        </label>
+        <label className="btn btn-outline-primary">
+          <input type="radio" name="tabs" value="authorization" 
+                 onChange={props.handleTab} checked={props.tab === 'authorization'}
+                 onClick={props.handleTab} />
+          Form-Data
+        </label>
+        <label className="btn btn-outline-primary">
+          <input type="radio" name="tabs" value="headers" 
+                 onChange={props.handleTab} checked={props.tab === 'headers'}
+                 onClick={props.handleTab} />
+          Raw
+        </label>
+      </div>
+
       <div style={{ maxWidth: "100%" }}>
         <MaterialTable
           icons={tableIcons}
           title="Form-Data"
           options={{
             search: false,
-            paging: false
+            paging: false,
+            draggable: false
           }}
           columns={[
             { title: 'Key', field: 'key' },

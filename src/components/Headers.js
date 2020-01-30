@@ -15,7 +15,8 @@ const Headers = (props) => {
           title="Headers table"
           options={{
             search: false,
-            paging: false
+            paging: false,
+            draggable: false
           }}
           columns={[
             { title: 'Key', field: 'key' },
