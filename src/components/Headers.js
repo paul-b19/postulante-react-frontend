@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import MaterialTable from 'material-table'
-
 import tableIcons from './MTcomponents'
-
 
 const Headers = (props) => {
 

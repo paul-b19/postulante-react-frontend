@@ -18,7 +18,6 @@ class Body extends React.Component {
     body: 'None' // 'Form-Data'/'Raw'
   }
 
-
   handleBody = (e) => {
     console.log(e.target.value)
     this.setState({
@@ -131,6 +130,7 @@ class Body extends React.Component {
               theme="solarized_light"
               width="100%"
               height="150px"
+              placeholder="enter request body here"
               onChange={this.handleEditor}
               name="UNIQUE_ID_OF_DIV"
               editorProps={{ $blockScrolling: true }}

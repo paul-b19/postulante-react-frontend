@@ -7,7 +7,7 @@ import "ace-builds/src-noconflict/mode-html"
 // import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/theme-solarized_light"
 
-const ResponseContainer  = (props) => {
+const Response  = (props) => {
 
   const handleEditor = (newValue) => {
     console.log("editor new value", newValue)
@@ -22,7 +22,8 @@ const ResponseContainer  = (props) => {
         theme="solarized_light"
         width="100%"
         height="300px"
-        readOnly="true"
+        readOnly={true}
+        placeholder="response will be rendered here"
         onChange={handleEditor}
         name="UNIQUE_ID_OF_DIV"
         editorProps={{ $blockScrolling: true }}
@@ -31,4 +32,4 @@ const ResponseContainer  = (props) => {
   )
 }
 
-export default ResponseContainer
+export default Response

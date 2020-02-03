@@ -72,3 +72,10 @@ body {
 .url-input {
   border: rgb(223,105,25) 0.2px solid;
 }
+
+.card .chevron-down {
+  transition: .3s transform ease-in-out;
+}
+.card .collapsed .chevron-down {
+  transform: rotate(-90deg);
+}

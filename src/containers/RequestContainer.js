@@ -26,7 +26,6 @@ class RequestContainer extends React.Component {
     })
   }
 
-
   render () {
  
     let tab
@@ -55,10 +54,7 @@ class RequestContainer extends React.Component {
         {tab}
       </div>
     )
-  
   }
-
-
 }
 
 export default RequestContainer

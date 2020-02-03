@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 import MaterialTable from 'material-table'
-
 import tableIcons from './MTcomponents'
-
 
 class Auth extends React.Component {
 
@@ -12,7 +10,6 @@ class Auth extends React.Component {
     value: '',
     addTo: 'Headers'  // 'Query Params'
   }
-
 
   handleAuth = (e) => {
     console.log('Auth', e.target.value)
@@ -28,9 +25,7 @@ class Auth extends React.Component {
     })
   }
 
-
   render () {
-
 
     return (
       <Fragment>

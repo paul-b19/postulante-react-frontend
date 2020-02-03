@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import NavBar from '../components/NavBar'
 import About from '../components/About'
-import RequestContainer from '../containers/RequestContainer'
-import ResponseContainer from '../containers/ResponseContainer'
+import Response from '../components/Response'
+import RequestContainer from './RequestContainer'
 
 
 class Application extends React.Component {
@@ -18,7 +18,7 @@ class Application extends React.Component {
           <NavBar />
 
           <RequestContainer />
-          <ResponseContainer />
+          <Response />
 
         </div>
       </Fragment>
