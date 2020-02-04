@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { updateCollections, updateRequests } from  '../actions'
 import Logo from '../images/logo_sb.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -10,13 +12,16 @@ class SideBar extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/collections')
+    // fetch('http://localhost:3000/collections')
+    fetch('http://localhost:3000/users/4')
       .then(resp => resp.json())
       .then(data => {
         console.log(data)
-        this.setState({
-          collections: data
-        })
+        this.props.updateCollections(data.collections)
+        this.props.updateRequests(data.requests)
+        // this.setState({
+        //   collections: data.collections
+        // })
       })
   }
   
@@ -30,6 +35,7 @@ class SideBar extends React.Component {
 
   render() {
     
+    console.log(this.props)
     return (
       <div className="bg-primary border-right" id="sidebar-wrapper">
         <div className="sidebar-heading">
@@ -40,7 +46,7 @@ class SideBar extends React.Component {
                onChange={this.handleSearch} />
         <div id="accordion" role="tablist" aria-multiselectable="true">
   
-          {this.state.collections.map((collection, idx) =>
+          {this.props.collections.length && this.props.collections.map((collection, idx) =>
             <div className="card" key={idx}>
               <h6 className="card-header" role="tab">
                 <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
@@ -64,4 +70,29 @@ class SideBar extends React.Component {
   }
 }
 
-export default SideBar
+// export default connect(state => 
+//   ({ userId: state.userId,
+//      collections: state.collections,
+//      requests: state.requests }),
+//   { updateCollections, updateRequests }
+// )(SideBar)
+
+const mapStateToProps = state => {
+  return {
+    userId: state.userId,
+    collections: state.collections,
+    requests: state.requests
+  }
+}
+ 
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCollections: (data) => dispatch(updateCollections(data)),
+    updateRequests: (data) => dispatch(updateRequests(data))
+  }
+}
+ 
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SideBar)
