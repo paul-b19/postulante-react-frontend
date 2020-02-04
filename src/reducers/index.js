@@ -4,11 +4,8 @@ let defaultState = {
   requests: []
 }
 
-export default function collectionReducer(
-  prevState = defaultState,
-  action
-) {
-  switch (action.type) {
+const globalReducer = (prevState = defaultState, action) => {
+  switch(action.type) {
     case 'UPDATE_COLLECTIONS':
       console.log(action.payload.collections)
       return {...prevState,
@@ -20,6 +17,8 @@ export default function collectionReducer(
       }
  
     default:
-      return prevState;
+      return prevState
   }
 }
+
+export default globalReducer

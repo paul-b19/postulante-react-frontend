@@ -12,16 +12,13 @@ class SideBar extends React.Component {
   }
 
   componentDidMount() {
-    // fetch('http://localhost:3000/collections')
-    fetch('http://localhost:3000/users/4')
+    // fetch('http://localhost:3000/users/4')
+    fetch(`http://localhost:3000/users/${this.props.userId}`)
       .then(resp => resp.json())
       .then(data => {
         console.log(data)
         this.props.updateCollections(data.collections)
         this.props.updateRequests(data.requests)
-        // this.setState({
-        //   collections: data.collections
-        // })
       })
   }
   
@@ -55,11 +52,16 @@ class SideBar extends React.Component {
               </h6>
           
               <div id={`collapse${idx}`} className="list-group-flush collapse" role="tabpanel" aria-labelledby={`heading${idx}`}>
-                <a href="#" className="list-group-item list-group-item-action bg-light">GET Request</a>
+                {this.props.requests.length && this.props.requests.map((request, idxx) => 
+                  request.collection_id === collection.id &&
+                  <a key={idxx} href="#" className="list-group-item list-group-item-action bg-light">{request.title}</a>
+                )}
+
+                {/* <a href="#" className="list-group-item list-group-item-action bg-light">GET Request</a>
                 <a href="#" className="list-group-item list-group-item-action bg-light">POST Request</a>
                 <a href="#" className="list-group-item list-group-item-action bg-light">PUT Request</a>
                 <a href="#" className="list-group-item list-group-item-action bg-light">PATCH Request</a>
-                <a href="#" className="list-group-item list-group-item-action bg-light">DELETE Request</a>
+                <a href="#" className="list-group-item list-group-item-action bg-light">DELETE Request</a> */}
               </div>
             </div>
           )}
