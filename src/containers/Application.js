@@ -7,8 +7,6 @@ import RequestContainer from './RequestContainer'
 
 class Application extends React.Component {
   
-
-
   render () {
 
     return(
@@ -16,10 +14,8 @@ class Application extends React.Component {
         <div id="page-content-wrapper">
           <About />
           <NavBar />
-
           <RequestContainer />
           <Response />
-
         </div>
       </Fragment>
     )
