@@ -3,7 +3,11 @@ let defaultState = {
   collections: [],
   requests: [],
   searchValue: '',
-  requestId: null, 
+  requestId: null,
+  requestTitle: 'Untitled',
+  method: 'GET',
+  url: '',
+  requestTab: 'params',
   response: `function onLoad(editor) {
     console.log("i've loaded");
   }`
@@ -27,6 +31,22 @@ const globalReducer = (prevState = defaultState, action) => {
     case 'SET_REQUEST_ID':
       return {...prevState,
         requestId: action.payload
+      }
+    case 'SET_REQUEST_TITLE':
+      return {...prevState,
+        requestTitle: action.payload
+      }
+    case 'SELECT_METHOD':
+      return {...prevState,
+        method: action.payload
+      }
+    case 'SET_URL':
+      return {...prevState,
+        url: action.payload
+      }
+    case 'SWITCH_REQUEST_TAB':
+      return {...prevState,
+        requestTab: action.payload
       }
     case 'UPDATE_RESPONSE':
       return {...prevState,

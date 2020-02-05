@@ -91,7 +91,6 @@ const mapStateToProps = state => {
     userId: state.userId,
     collections: state.collections,
     requests: state.requests,
-    // requestId: state.requestId,
     searchValue: state.searchValue
   }
 }

@@ -33,6 +33,34 @@ export function setRequestId(id) {
   }
 }
 
+export function setRequestTitle(title) {
+  return {
+    type: 'SET_REQUEST_TITLE',
+    payload: title
+  }
+}
+
+export function selectMethod(method) {
+  return {
+    type: 'SELECT_METHOD',
+    payload: method
+  }
+}
+
+export function setUrl(url) {
+  return {
+    type: 'SET_URL',
+    payload: url
+  }
+}
+
+export function switchRequestTab(tab) {
+  return {
+    type: 'SWITCH_REQUEST_TAB',
+    payload: tab
+  }
+}
+
 export function updateResponse(resp) {
   return {
     type: 'UPDATE_RESPONSE',

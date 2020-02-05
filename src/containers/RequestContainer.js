@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { switchRequestTab } from '../actions'
 import Request from '../components/Request'
 import Params from '../components/Params'
 import Auth from '../components/Auth'
@@ -7,29 +9,15 @@ import Body from '../components/Body'
 
 class RequestContainer extends React.Component {
 
-  state = {
-    method: 'GET', // 'POST'/'PUT'/'PATCH'/'DELETE'
-    tab: 'params' // 'authorization'/'headers'/'body'
-  }
-
-  handleMethod = (e) => {
-    console.log(e.target.value)
-    this.setState({
-      method: e.target.value
-    })
-  }
-
-  handleTab = (e) => {
-    console.log(e.target.value)
-    this.setState({
-      tab: e.target.value
-    })
-  }
+  // state = {
+  //   method: 'GET', // 'POST'/'PUT'/'PATCH'/'DELETE'
+  //   tab: 'params' // 'authorization'/'headers'/'body'
+  // }
 
   render () {
- 
+
     let tab
-    switch (this.state.tab) {
+    switch (this.props.requestTab) {
       case 'params':
         tab = <Params />
         break;
@@ -47,14 +35,31 @@ class RequestContainer extends React.Component {
     return (
       <div className="reqCont">
         <h3>Request Container</h3>
-        <Request handleMethod={this.handleMethod}
-                 method={this.state.method}
-                 handleTab={this.handleTab}
-                 tab={this.state.tab}/>
+        <Request />
         {tab}
       </div>
     )
   }
 }
 
-export default RequestContainer
+const mapStateToProps = state => {
+  return {
+    // userId: state.userId,
+    // requestId: state.requestId,
+    // method: state.method,
+    requestTab: state.requestTab
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // setRequestId: (data) => dispatch(setRequestId(data)),
+    // selectMethod: (data) => dispatch(selectMethod(data)),
+    switchRequestTab: (data) => dispatch(switchRequestTab(data))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RequestContainer)
