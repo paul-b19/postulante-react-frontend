@@ -1,8 +1,15 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { updateAttribs } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
 
 const Params = (props) => {
+
+  let paramsList = props.attribs.length > 0 && props.attribs.map(attrib => {
+    attrib.attr_type === 'params' && 
+    Object.create({ key: attrib.key, value: attrib.value, description: attrib.description })
+  })
 
   return (
     <Fragment>
@@ -18,13 +25,14 @@ const Params = (props) => {
           }}
           columns={[
             { title: 'Key', field: 'key' },
-            { title: 'Value', field: 'value', initialEditValue: 'initial edit value' },
+            { title: 'Value', field: 'value' },
             { title: 'Description', field: 'description' }
           ]}
-          data={[
-            { key: 'country', value: 'US', description: 'none' },
-            { key: 'city', value: 'New York', description: 'none' }
-          ]}
+          // data={[
+          //   { key: 'country', value: 'US', description: 'none' },
+          //   { key: 'city', value: 'New York', description: 'none' }
+          // ]}
+          data={ paramsList }
           // options={{ selection: true }}
           // actions={[
           //   {
@@ -76,4 +84,20 @@ const Params = (props) => {
   )
 }
 
-export default Params
+const mapStateToProps = state => {
+  return {
+    requestId: state.requestId,
+    attribs: state.attribs
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateAttribs: (data) => dispatch(updateAttribs(data))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Params)
