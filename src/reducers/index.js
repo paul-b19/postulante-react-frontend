@@ -3,6 +3,7 @@ let defaultState = {
   collections: [],
   requests: [],
   searchValue: '',
+  requestId: null, 
   response: `function onLoad(editor) {
     console.log("i've loaded");
   }`
@@ -22,6 +23,10 @@ const globalReducer = (prevState = defaultState, action) => {
     case 'UPDATE_SEARCH':
       return {...prevState,
         searchValue: action.payload
+      }
+    case 'SET_REQUEST_ID':
+      return {...prevState,
+        requestId: action.payload
       }
     case 'UPDATE_RESPONSE':
       return {...prevState,

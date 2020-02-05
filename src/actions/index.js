@@ -26,6 +26,13 @@ export function updateSearch(input) {
   }
 }
 
+export function setRequestId(id) {
+  return {
+    type: 'SET_REQUEST_ID',
+    payload: id
+  }
+}
+
 export function updateResponse(resp) {
   return {
     type: 'UPDATE_RESPONSE',
