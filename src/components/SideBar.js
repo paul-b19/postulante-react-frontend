@@ -1,18 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateCollections, updateRequests } from  '../actions'
+import { updateCollections, updateRequests, updateSearch } from  '../actions'
 import Logo from '../images/logo_sb.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class SideBar extends React.Component {
 
-  state = {
-    collections: [],
-    searchValue: ''
-  }
+  // state = {}
 
   componentDidMount() {
-    // fetch('http://localhost:3000/users/4')
     fetch(`http://localhost:3000/users/${this.props.userId}`)
       .then(resp => resp.json())
       .then(data => {
@@ -21,13 +17,10 @@ class SideBar extends React.Component {
         this.props.updateRequests(data.requests)
       })
   }
-  
 
   handleSearch = e => {
     console.log('search', e.target.value)
-    this.setState({
-      searchValue: e.target.value
-    })
+    this.props.updateSearch(e.target.value)
   }
 
   render() {
@@ -39,7 +32,7 @@ class SideBar extends React.Component {
           <img className="logo-sidebar" src={Logo} alt='Logo'/>
         </div>
         <input className="form-control mr-sm-2" type="text" placeholder="Filter"
-               value={this.state.searchValue}
+               value={this.props.searchValue}
                onChange={this.handleSearch} />
         <div id="accordion" role="tablist" aria-multiselectable="true">
   
@@ -86,14 +79,15 @@ const mapStateToProps = state => {
     requests: state.requests
   }
 }
- 
+
 const mapDispatchToProps = dispatch => {
   return {
     updateCollections: (data) => dispatch(updateCollections(data)),
-    updateRequests: (data) => dispatch(updateRequests(data))
+    updateRequests: (data) => dispatch(updateRequests(data)),
+    updateSearch: (data) => dispatch(updateSearch(data))
   }
 }
- 
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -18,3 +18,17 @@ export function updateRequests(requests) {
     payload: requests
   }
 }
+
+export function updateSearch(input) {
+  return {
+    type: 'UPDATE_SEARCH',
+    payload: input
+  }
+}
+
+export function updateResponse(resp) {
+  return {
+    type: 'UPDATE_RESPONSE',
+    payload: resp
+  }
+}

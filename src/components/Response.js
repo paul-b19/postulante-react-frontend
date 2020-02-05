@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import AceEditor from "react-ace"
 import "ace-builds/src-noconflict/mode-json5"
@@ -7,11 +8,7 @@ import "ace-builds/src-noconflict/mode-html"
 // import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/theme-solarized_light"
 
-const Response  = (props) => {
-
-  const handleEditor = (newValue) => {
-    console.log("editor new value", newValue)
-  }
+const Response = (props) => {
 
   return (
     <div className="respCont">
@@ -24,7 +21,7 @@ const Response  = (props) => {
         height="300px"
         readOnly={true}
         placeholder="response will be rendered here"
-        onChange={handleEditor}
+        value={props.response}
         name="UNIQUE_ID_OF_DIV"
         editorProps={{ $blockScrolling: true }}
       />
@@ -32,4 +29,10 @@ const Response  = (props) => {
   )
 }
 
-export default Response
+const mapStateToProps = state => {
+  return {
+    response: state.response
+  }
+}
+
+export default connect( mapStateToProps )( Response )
