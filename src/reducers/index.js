@@ -7,6 +7,8 @@ let defaultState = {
   requestTitle: 'Untitled',
   method: 'GET',
   url: '',
+  attribs: [],
+  bodies: [],
   requestTab: 'params',
   response: `function onLoad(editor) {
     console.log("i've loaded");
@@ -44,6 +46,14 @@ const globalReducer = (prevState = defaultState, action) => {
       return {...prevState,
         url: action.payload
       }
+    case 'UPDATE_ATTRIBS':
+      return {...prevState,
+        attribs: action.payload
+      }
+    case 'UPDATE_BODIES':
+      return {...prevState,
+        bodies: action.payload
+      }
     case 'SWITCH_REQUEST_TAB':
       return {...prevState,
         requestTab: action.payload
@@ -52,7 +62,7 @@ const globalReducer = (prevState = defaultState, action) => {
       return {...prevState,
         response: action.payload
       }
- 
+
     default:
       return prevState
   }

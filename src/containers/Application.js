@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setRequestTitle, selectMethod, setUrl } from '../actions'
+import { setRequestTitle, selectMethod, setUrl, updateAttribs, updateBodies } from '../actions'
 import NavBar from '../components/NavBar'
 import About from '../components/About'
 import Response from '../components/Response'
@@ -19,6 +19,8 @@ class Application extends React.Component {
         this.props.setRequestTitle(data.title)
         this.props.selectMethod(data.method)
         this.props.setUrl(data.url)
+        this.props.updateAttribs(data.attribs)
+        this.props.updateBodies(data.bodies)
       })
   }
   
@@ -40,8 +42,8 @@ class Application extends React.Component {
 const mapStateToProps = state => {
   return {
     // userId: state.userId,
-    requestId: state.requestId,
-    // method: state.method
+    // method: state.method,
+    requestId: state.requestId
   }
 }
 
@@ -50,7 +52,8 @@ const mapDispatchToProps = dispatch => {
     setRequestTitle: (data) => dispatch(setRequestTitle(data)),
     selectMethod: (data) => dispatch(selectMethod(data)),
     setUrl: (data) => dispatch(setUrl(data)),
-    
+    updateAttribs: (data) => dispatch(updateAttribs(data)),
+    updateBodies: (data) => dispatch(updateBodies(data))
   }
 }
 

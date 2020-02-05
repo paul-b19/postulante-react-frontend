@@ -4,6 +4,11 @@ import { setRequestTitle, selectMethod, setUrl, switchRequestTab } from  '../act
 
 const Request = (props) => {
 
+  const handleRequestTitle = e => {
+    console.log(e.target.value)
+    props.setRequestTitle(e.target.value)
+  }
+
   const handleUrl = e => {
     console.log(e.target.value)
     props.setUrl(e.target.value)
@@ -21,7 +26,27 @@ const Request = (props) => {
 
   return (
     <Fragment>
-      <label>{props.requestTitle}</label>
+      <ul className="nav nav-pills">
+        <li className="nav-item">
+          {!props.titleEdit ? 
+            <h5 onClick={props.handleTitleEdit}>{props.requestTitle}</h5>
+          :
+            <div className="input-group mb-3">
+              <div className="url-input">
+                <input type="text" className="form-control" placeholder="Untitled" id="requestTitle"
+                       value={props.requestTitle} onChange={handleRequestTitle} />
+              </div>
+              <div className="input-group-append">
+                <span onClick={props.handleTitleEdit} className="input-group-text">Done</span>
+              </div>
+            </div>
+          }
+        </li>
+        <li className="nav-item">
+          <button type="button" className="btn btn-outline-primary">New Request</button>
+        </li>
+      </ul>
+
       <ul className="nav nav-pills">
         <li className="nav-item">
           <div className="btn-group" role="group">

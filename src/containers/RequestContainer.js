@@ -9,10 +9,18 @@ import Body from '../components/Body'
 
 class RequestContainer extends React.Component {
 
-  // state = {
-  //   method: 'GET', // 'POST'/'PUT'/'PATCH'/'DELETE'
-  //   tab: 'params' // 'authorization'/'headers'/'body'
-  // }
+  state = {
+    // method: 'GET', // 'POST'/'PUT'/'PATCH'/'DELETE'
+    // tab: 'params' // 'authorization'/'headers'/'body'
+    titleEdit: false
+  }
+
+  handleTitleEdit = () => {
+    console.log('title edit')
+    this.setState({
+      titleEdit: !this.state.titleEdit
+    })
+  }
 
   render () {
 
@@ -35,7 +43,8 @@ class RequestContainer extends React.Component {
     return (
       <div className="reqCont">
         <h3>Request Container</h3>
-        <Request />
+        <Request titleEdit={this.state.titleEdit}
+                 handleTitleEdit={this.handleTitleEdit} />
         {tab}
       </div>
     )

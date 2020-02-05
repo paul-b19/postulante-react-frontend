@@ -54,6 +54,20 @@ export function setUrl(url) {
   }
 }
 
+export function updateAttribs(attribs) {
+  return {
+    type: 'UPDATE_ATTRIBS',
+    payload: attribs
+  }
+}
+
+export function updateBodies(bodies) {
+  return {
+    type: 'UPDATE_BODIES',
+    payload: bodies
+  }
+}
+
 export function switchRequestTab(tab) {
   return {
     type: 'SWITCH_REQUEST_TAB',
