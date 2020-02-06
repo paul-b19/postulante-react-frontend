@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { updateAttribs } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
 
@@ -8,7 +10,7 @@ class Auth extends React.Component {
     auth: 'noAuth',  // 'apiKey'
     key: '',
     value: '',
-    addTo: 'Headers'  // 'Query Params'
+    addTo: 'Headers'  // 'Params'
   }
 
   handleAuth = (e) => {
@@ -26,6 +28,10 @@ class Auth extends React.Component {
   }
 
   render () {
+
+    let apiKey = this.props.attribs.find( ({attr_type}) => 
+      attr_type === 'auth'
+    )
 
     return (
       <Fragment>
@@ -68,8 +74,11 @@ class Auth extends React.Component {
                   </select>
                 )}
               ]}
-              data={[
-                { key: 'API_KEY', value: 'QIU12NBV3128ASJH8', add_to: this.state.addTo }
+              // data={[
+              //   { key: 'API_KEY', value: 'QIU12NBV3128ASJH8', add_to: this.state.addTo }
+              // ]}
+              data={ apiKey && [
+                { key: apiKey.key, value: apiKey.value, add_to: this.state.addTo }
               ]}
               editable={{
                 onRowUpdate: (newData, oldData) =>
@@ -93,4 +102,20 @@ class Auth extends React.Component {
   }
 }
 
-export default Auth
+const mapStateToProps = state => {
+  return {
+    requestId: state.requestId,
+    attribs: state.attribs
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateAttribs: (data) => dispatch(updateAttribs(data))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Auth)

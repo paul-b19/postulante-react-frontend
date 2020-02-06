@@ -6,10 +6,9 @@ import tableIcons from './MTcomponents'
 
 const Params = (props) => {
 
-  let paramsList = props.attribs.length > 0 && props.attribs.map(attrib => {
-    attrib.attr_type === 'params' && 
-    Object.create({ key: attrib.key, value: attrib.value, description: attrib.description })
-  })
+  let paramsList = props.attribs.filter( attrib =>
+    attrib.attr_type === 'params'
+  )
 
   return (
     <Fragment>

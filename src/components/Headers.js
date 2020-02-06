@@ -1,8 +1,14 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { updateAttribs } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
 
 const Headers = (props) => {
+
+  let headersList = props.attribs.filter( attrib =>
+    attrib.attr_type === 'headers'
+  )
 
   return (
     <Fragment>
@@ -21,10 +27,11 @@ const Headers = (props) => {
             { title: 'Value', field: 'value', initialEditValue: 'initial edit value' },
             { title: 'Description', field: 'description' }
           ]}
-          data={[
-            { key: 'country', value: 'US', description: 'none' },
-            { key: 'city', value: 'New York', description: 'none' }
-          ]}
+          // data={[
+          //   { key: 'country', value: 'US', description: 'none' },
+          //   { key: 'city', value: 'New York', description: 'none' }
+          // ]}
+          data={ headersList }
           // options={{ selection: true }}
           // actions={[
           //   {
@@ -76,4 +83,20 @@ const Headers = (props) => {
   )
 }
 
-export default Headers
+const mapStateToProps = state => {
+  return {
+    requestId: state.requestId,
+    attribs: state.attribs
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateAttribs: (data) => dispatch(updateAttribs(data))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Headers)
