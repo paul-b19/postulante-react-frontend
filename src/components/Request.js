@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setRequestTitle, selectMethod, setUrl, switchRequestTab } from  '../actions'
+import { setRequestId, setRequestTitle, selectMethod, setUrl, switchRequestTab } from  '../actions'
 
 const Request = (props) => {
+
+  const handleNewRequest = () => {
+    console.log('New Request')
+    props.setRequestId(null)
+  }
 
   const handleRequestTitle = e => {
     console.log(e.target.value)
@@ -32,8 +37,8 @@ const Request = (props) => {
             <h5 onClick={props.handleTitleEdit}>{props.requestTitle}</h5>
           :
             <div className="input-group mb-3">
-              <div className="url-input">
-                <input type="text" className="form-control" placeholder="Untitled" id="requestTitle"
+              <div className="title-input">
+                <input type="text" className="form-control" id="requestTitle"
                        value={props.requestTitle} onChange={handleRequestTitle} />
               </div>
               <div className="input-group-append">
@@ -43,7 +48,9 @@ const Request = (props) => {
           }
         </li>
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary">New Request</button>
+          <button type="button" className="btn btn-outline-primary"
+                  onClick={handleNewRequest}>
+            New Request</button>
         </li>
       </ul>
 
@@ -117,7 +124,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // setRequestId: (data) => dispatch(setRequestId(data)),
+    setRequestId: (data) => dispatch(setRequestId(data)),
     setRequestTitle: (data) => dispatch(setRequestTitle(data)),
     selectMethod: (data) => dispatch(selectMethod(data)),
     setUrl: (data) => dispatch(setUrl(data)),

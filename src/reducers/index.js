@@ -12,7 +12,13 @@ let defaultState = {
   requestTab: 'params',
   response: `function onLoad(editor) {
     console.log("i've loaded");
-  }`
+  }`,
+
+  xxxParams: [],
+  xxxAuth: [],
+  xxxHeaders: [],
+  xxxFdBody: [],
+  xxxRawBody: []
 }
 
 const globalReducer = (prevState = defaultState, action) => {

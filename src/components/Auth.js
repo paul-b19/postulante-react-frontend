@@ -67,19 +67,18 @@ class Auth extends React.Component {
               columns={[
                 { title: 'Key', field: 'key' },
                 { title: 'Value', field: 'value', initialEditValue: 'initial edit value' },
-                { title: 'Add to', field: 'add_to', render: rowData => (
-                  <select onChange={this.handleAddTo} value={this.state.addTo}>
+                { title: 'Add to', field: 'description', render: rowData => (
+                  <select onChange={this.handleAddTo} value={apiKey.description}>
                     <option value="Headers">Headers</option>
-                    <option value="Query Params">Query Params</option>
+                    <option value="Params">Params</option>
                   </select>
                 )}
               ]}
-              // data={[
-              //   { key: 'API_KEY', value: 'QIU12NBV3128ASJH8', add_to: this.state.addTo }
-              // ]}
+
               data={ apiKey && [
-                { key: apiKey.key, value: apiKey.value, add_to: this.state.addTo }
+                { key: apiKey.key, value: apiKey.value }
               ]}
+              
               editable={{
                 onRowUpdate: (newData, oldData) =>
                   new Promise((resolve, reject) => {

@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
+import { updateBodies } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
 
@@ -30,6 +32,15 @@ class Body extends React.Component {
   }
 
   render () {
+
+    // console.log('bodies: ', this.props.bodies)
+    let reqFdBody = this.props.bodies.filter( body =>
+      body.body_type === 'Form-Data'
+    )
+    let reqRawBody = this.props.bodies.find( ({body_type}) =>
+      body_type === 'Raw'
+    )
+    // console.log('raw body: ', reqRawBody)
 
     return (
       <Fragment>
@@ -67,13 +78,14 @@ class Body extends React.Component {
               }}
               columns={[
                 { title: 'Key', field: 'key' },
-                { title: 'Value', field: 'value', initialEditValue: 'initial edit value' },
+                { title: 'Value', field: 'value' },
                 { title: 'Description', field: 'description' }
               ]}
-              data={[
-                { key: 'country', value: 'US', description: 'none' },
-                { key: 'city', value: 'New York', description: 'none' }
-              ]}
+              // data={[
+              //   { key: 'country', value: 'US', description: 'none' },
+              //   { key: 'city', value: 'New York', description: 'none' }
+              // ]}
+              data={ reqFdBody }
               // options={{ selection: true }}
               // actions={[
               //   {
@@ -131,6 +143,7 @@ class Body extends React.Component {
               width="100%"
               height="150px"
               placeholder="enter request body here"
+              value={ reqRawBody && reqRawBody.raw_body }
               onChange={this.handleEditor}
               name="UNIQUE_ID_OF_DIV"
               editorProps={{ $blockScrolling: true }}
@@ -142,4 +155,20 @@ class Body extends React.Component {
   }
 }
 
-export default Body
+const mapStateToProps = state => {
+  return {
+    requestId: state.requestId,
+    bodies: state.bodies
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateBodies: (data) => dispatch(updateBodies(data))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Body)

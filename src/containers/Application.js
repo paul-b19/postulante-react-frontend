@@ -12,16 +12,24 @@ class Application extends React.Component {
   componentDidUpdate() {
     console.log('Application.js fetching request with id: ', this.props.requestId)
 
-    fetch(`http://localhost:3000/requests/${this.props.requestId}`)
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-        this.props.setRequestTitle(data.title)
-        this.props.selectMethod(data.method)
-        this.props.setUrl(data.url)
-        this.props.updateAttribs(data.attribs)
-        this.props.updateBodies(data.bodies)
-      })
+    this.props.requestId ?
+      fetch(`http://localhost:3000/requests/${this.props.requestId}`)
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+          this.props.setRequestTitle(data.title)
+          this.props.selectMethod(data.method)
+          this.props.setUrl(data.url)
+          this.props.updateAttribs(data.attribs)
+          this.props.updateBodies(data.bodies)
+        })
+    :
+      this.props.setRequestTitle('Untitled')
+      this.props.selectMethod('GET')
+      this.props.setUrl('')
+      this.props.updateAttribs([])
+      this.props.updateBodies([])
+
   }
   
   render () {
