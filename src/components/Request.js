@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setRequestId, setRequestTitle, selectMethod, setUrl, switchRequestTab } from  '../actions'
+import { setRequestId, setRequestTitle, selectMethod, setUrl, 
+         switchRequestTab } from  '../actions'
 
 const Request = (props) => {
 
@@ -27,6 +28,23 @@ const Request = (props) => {
   const handleTab = e => {
     console.log(e.target.value)
     props.switchRequestTab(e.target.value)
+  }
+
+  const handleSave = () => {
+    props.requestId ?
+      updateRequest()
+    :
+      createRequest()
+  }
+
+  const createRequest = () => {
+    console.log('creating request')
+    
+  }
+  
+  const updateRequest = () => {
+    console.log('updating request')
+
   }
 
   return (
@@ -77,7 +95,10 @@ const Request = (props) => {
           <button type="button" className="btn btn-outline-primary">Send</button>
         </li>
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary">Save</button>
+          <button type="button" className="btn btn-outline-primary"
+                  onClick={handleSave}>
+            Save
+          </button>
         </li>
       </ul>
 
@@ -114,7 +135,7 @@ const Request = (props) => {
 const mapStateToProps = state => {
   return {
     // userId: state.userId,
-    // requestId: state.requestId,
+    requestId: state.requestId,
     requestTitle: state.requestTitle,
     method: state.method,
     url: state.url,

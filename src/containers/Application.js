@@ -12,6 +12,8 @@ class Application extends React.Component {
   componentDidUpdate() {
     console.log('Application.js fetching request with id: ', this.props.requestId)
 
+    // fetching request by ID and saving parts to Store
+    // or resetting Store to default
     this.props.requestId ?
       fetch(`http://localhost:3000/requests/${this.props.requestId}`)
         .then(resp => resp.json())
