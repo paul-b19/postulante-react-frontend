@@ -113,6 +113,7 @@ class SideBar extends React.Component {
               </div>
             }
 
+            {/***  requests collections  ***/}
             <div id="accordion" role="tablist" aria-multiselectable="true">
               {this.props.collections.length && this.props.collections.map((collection, idx) =>
                 <div className="card" key={idx}>

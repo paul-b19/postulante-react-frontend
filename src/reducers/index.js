@@ -1,7 +1,7 @@
 let defaultState = {
   userId: 7, 
   collections: [],
-  collection: '',
+  collection: '',  // <-- collection object
   requests: [],
   searchValue: '',
   requestId: null,
