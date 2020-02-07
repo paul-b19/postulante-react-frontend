@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateCollections, updateRequests, updateSearch, setRequestId } from  '../actions'
+import { updateCollections, setCollection, updateRequests, 
+         updateSearch, setRequestId } from  '../actions'
 import Logo from '../images/logo_sb.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -17,6 +18,7 @@ class SideBar extends React.Component {
       .then(data => {
         console.log(data)
         this.props.updateCollections(data.collections)
+        this.props.setCollection(this.props.collections.find(i => i))
         this.props.updateRequests(data.requests)
       })
   }
@@ -56,6 +58,7 @@ class SideBar extends React.Component {
           .then(data => {
             console.log(data)
             this.props.updateCollections(data.collections)
+            this.props.setCollection(this.props.collections.find(i => i))
             this.props.updateRequests(data.requests)
           })
       })
@@ -149,6 +152,7 @@ const mapStateToProps = state => {
   return {
     userId: state.userId,
     collections: state.collections,
+    collection: state.collection,
     requests: state.requests,
     searchValue: state.searchValue
   }
@@ -157,6 +161,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateCollections: (data) => dispatch(updateCollections(data)),
+    setCollection: (data) => dispatch(setCollection(data)),
     updateRequests: (data) => dispatch(updateRequests(data)),
     updateSearch: (data) => dispatch(updateSearch(data)),
     setRequestId: (data) => dispatch(setRequestId(data))

@@ -1,6 +1,7 @@
 let defaultState = {
   userId: 7, 
   collections: [],
+  collection: '',
   requests: [],
   searchValue: '',
   requestId: null,
@@ -27,6 +28,10 @@ const globalReducer = (prevState = defaultState, action) => {
       // console.log(action.payload.collections)
       return {...prevState,
         collections: action.payload
+      }
+    case 'SET_COLLECTION':
+      return {...prevState,
+        collection: action.payload
       }
     case 'UPDATE_REQUESTS':
       return {...prevState,

@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setRequestId, setRequestTitle, selectMethod, setUrl, 
-         switchRequestTab } from  '../actions'
+import { setCollection, updateRequests, setRequestId, setRequestTitle, 
+         selectMethod, setUrl, switchRequestTab } from  '../actions'
 
 const Request = (props) => {
+
+  const handleCollection = e => {
+    console.log('set collection', JSON.parse(e.target.value))
+    props.setCollection(JSON.parse(e.target.value))
+  }
 
   const handleNewRequest = () => {
     console.log('New Request')
@@ -30,21 +35,58 @@ const Request = (props) => {
     props.switchRequestTab(e.target.value)
   }
 
+  // creating new request or updating existing one
   const handleSave = () => {
     props.requestId ?
-      updateRequest()
+      updateRequest(props.requestId)
     :
       createRequest()
   }
 
   const createRequest = () => {
     console.log('creating request')
-    
+    fetch('http://localhost:3000/requests', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "title": props.requestTitle,
+        "method": props.method,
+        "url": props.url,
+        "collection_id": props.collection.id
+      })
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        props.setRequestId(data.id)
+        props.updateRequests([...props.requests, data])
+      })
   }
   
-  const updateRequest = () => {
+  const updateRequest = (id) => {
     console.log('updating request')
-
+    fetch(`http://localhost:3000/requests/${props.requestId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "title": props.requestTitle,
+        "method": props.method,
+        "url": props.url,
+        "collection_id": props.collection.id
+      })
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(props.requestId)
+        console.log(data.id)
+        let updRequests = [...props.requests].map(req => {
+          return req.id == props.requestId ? data : req}) // <-- integer vs string
+        console.log('updRequests', updRequests)
+        props.updateRequests(updRequests)
+      })
   }
 
   return (
@@ -65,13 +107,24 @@ const Request = (props) => {
             </div>
           }
         </li>
+        {/***  selecting request collection  ***/}
+        <li className="nav-item">
+          <div className="form-group">
+            <select onChange={handleCollection} value={JSON.stringify(props.collection)} className="custom-select">
+              {props.collections.map(collection => 
+                <option key={collection.id} value={JSON.stringify(collection)}>{collection.name}</option>
+              )}
+            </select>
+           </div>
+        </li>
+        {/***  new request  ***/}
         <li className="nav-item">
           <button type="button" className="btn btn-outline-primary"
                   onClick={handleNewRequest}>
             New Request</button>
         </li>
       </ul>
-
+      {/***  request form  ***/}
       <ul className="nav nav-pills">
         <li className="nav-item">
           <div className="btn-group" role="group">
@@ -135,6 +188,9 @@ const Request = (props) => {
 const mapStateToProps = state => {
   return {
     // userId: state.userId,
+    collections: state.collections,
+    collection: state.collection,
+    requests: state.requests,
     requestId: state.requestId,
     requestTitle: state.requestTitle,
     method: state.method,
@@ -145,6 +201,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setCollection: (data) => dispatch(setCollection(data)),
+    updateRequests: (data) => dispatch(updateRequests(data)),
     setRequestId: (data) => dispatch(setRequestId(data)),
     setRequestTitle: (data) => dispatch(setRequestTitle(data)),
     selectMethod: (data) => dispatch(selectMethod(data)),
