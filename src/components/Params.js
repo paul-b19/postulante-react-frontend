@@ -6,6 +6,12 @@ import tableIcons from './MTcomponents'
 
 const Params = (props) => {
 
+  // let paramsList = React.useEffect(() => {
+  //   return props.attribs.filter( attrib =>
+  //     attrib.attr_type === 'params'
+  //   )
+  // }, [])
+
   let paramsList = props.attribs.filter( attrib =>
     attrib.attr_type === 'params'
   )
@@ -32,26 +38,31 @@ const Params = (props) => {
           //   { key: 'city', value: 'New York', description: 'none' }
           // ]}
           data={ paramsList }
-          // options={{ selection: true }}
-          // actions={[
-          //   {
-          //     tooltip: 'Remove All Selected Users',
-          //     icon: 'delete',
-          //     onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
-          //   }
-          // ]}
+          
           editable={{
             onRowAdd: newData =>
-              new Promise((resolve, reject) => {
+              new Promise((resolve) => {
                 setTimeout(() => {
                   {
-                    /* const data = this.state.data;
-                    data.push(newData);
-                    this.setState({ data }, () => resolve()); */
+                    const data = props.attribs
+                    let newParam = {...newData, ...{attr_type: 'params'}}
+                    data.push(newParam)
+                    props.updateAttribs(data)
                   }
                   resolve();
                 }, 1000);
               }),
+            // onRowAdd: newData =>
+            //   new Promise((resolve, reject) => {
+            //     setTimeout(() => {
+            //       {
+            //         /* const data = this.state.data;
+            //         data.push(newData);
+            //         this.setState({ data }, () => resolve()); */
+            //       }
+            //       resolve();
+            //     }, 1000);
+            //   }),
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {

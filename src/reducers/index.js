@@ -15,11 +15,11 @@ let defaultState = {
     console.log("i've loaded");
   }`,
 
-  xxxParams: [],
-  xxxAuth: [],
-  xxxHeaders: [],
-  xxxFdBody: [],
-  xxxRawBody: []
+  // xxxParams: [],
+  // xxxAuth: [],
+  // xxxHeaders: [],
+  // xxxFdBody: [],
+  // xxxRawBody: []
 }
 
 const globalReducer = (prevState = defaultState, action) => {
