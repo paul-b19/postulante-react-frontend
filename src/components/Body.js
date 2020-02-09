@@ -38,29 +38,50 @@ class Body extends React.Component {
     if (rawBody && newValue) {
       const data = this.props.bodies
       const index = data.indexOf(rawBody)
-      data[index].raw_body = newValue
+      data[index] = {...rawBody, ...{raw_body: newValue, for_deletion: false}}
       this.props.updateBodies(data)                
       this.setState({
         rawBody: newValue
       })
+      // const data = this.props.bodies
+      // const index = data.indexOf(rawBody)
+      // data[index].raw_body = newValue
+      // this.props.updateBodies(data)                
+      // this.setState({
+      //   rawBody: newValue
+      // })
     // creating rawBody
     } else if (!rawBody && newValue) {
       const data = this.props.bodies
-      let newBody = {body_type: 'Raw', raw_body: newValue}
+      let newBody = {body_type: 'Raw', raw_body: newValue, for_deletion: false}
       data.push(newBody)
       this.props.updateBodies(data)
       this.setState({
         rawBody: newValue
       })
+      // const data = this.props.bodies
+      // let newBody = {body_type: 'Raw', raw_body: newValue}
+      // data.push(newBody)
+      // this.props.updateBodies(data)
+      // this.setState({
+      //   rawBody: newValue
+      // })
     // deleting rawBody
     } else if (rawBody && !newValue) {
       let data = this.props.bodies
       const index = data.indexOf(rawBody)
-      data.splice(index, 1)
+      data[index] = {...rawBody, ...{raw_body: newValue, for_deletion: true}}
       this.props.updateBodies(data)
       this.setState({
         rawBody: newValue
       })
+      // let data = this.props.bodies
+      // const index = data.indexOf(rawBody)
+      // data.splice(index, 1)
+      // this.props.updateBodies(data)
+      // this.setState({
+      //   rawBody: newValue
+      // })
     }
   }
 
@@ -153,7 +174,7 @@ class Body extends React.Component {
                       {
                         let data = this.props.bodies
                         const index = data.indexOf(oldData)
-                        data.splice(index, 1)
+                        data[index] = {...oldData, ...{for_deletion: true}}
                         this.props.updateBodies(data)
                         this.setState({
                           fdBodiesList: data
@@ -162,12 +183,27 @@ class Body extends React.Component {
                       resolve()
                     }, 1000)
                   })
+                // onRowDelete: oldData =>
+                //   new Promise((resolve) => {
+                //     setTimeout(() => {
+                //       {
+                //         let data = this.props.bodies
+                //         const index = data.indexOf(oldData)
+                //         data.splice(index, 1)
+                //         this.props.updateBodies(data)
+                //         this.setState({
+                //           fdBodiesList: data
+                //         }, () => resolve())
+                //       }
+                //       resolve()
+                //     }, 1000)
+                //   })
               }}
             />
           </div>
         }
 
-        {/***  selecting raw tab  ***/}
+        {/***  selecting raw tab (Ace Editor) ***/}
         {this.state.body === 'Raw' &&
           <div style={{ maxWidth: "100%" }}>
             <AceEditor

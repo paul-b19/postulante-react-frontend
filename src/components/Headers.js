@@ -34,9 +34,7 @@ class Headers extends React.Component {
               { title: 'Value', field: 'value' },
               { title: 'Description (optional)', field: 'description' }
             ]}
-            // data={[
-            //   { key: 'country', value: 'US', description: 'none' }
-            // ]}
+
             data={ headersList }
             
             editable={{
@@ -76,7 +74,7 @@ class Headers extends React.Component {
                     {
                       let data = this.props.attribs
                       const index = data.indexOf(oldData)
-                      data.splice(index, 1)
+                      data[index] = {...oldData, ...{for_deletion: true}}
                       this.props.updateAttribs(data)
                       this.setState({
                         headersList: data
@@ -85,6 +83,21 @@ class Headers extends React.Component {
                     resolve()
                   }, 1000)
                 })
+              // onRowDelete: oldData =>
+              //   new Promise((resolve) => {
+              //     setTimeout(() => {
+              //       {
+              //         let data = this.props.attribs
+              //         const index = data.indexOf(oldData)
+              //         data.splice(index, 1)
+              //         this.props.updateAttribs(data)
+              //         this.setState({
+              //           headersList: data
+              //         }, () => resolve())
+              //       }
+              //       resolve()
+              //     }, 1000)
+              //   })
             }}
           />
         </div>

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { setCollection, updateRequests, setRequestId, setRequestTitle, 
-         selectMethod, setUrl, switchRequestTab } from  '../actions'
+         selectMethod, setUrl, switchRequestTab, updateAttribs, updateBodies } from  '../actions'
 
 const Request = (props) => {
 
@@ -64,9 +64,13 @@ const Request = (props) => {
       })
   }
   
-  const updateRequest = (id) => {
+  const updateRequest = (reqId) => {
+    // updating requests Attribs and Bodies
+    updateReqAttribs(reqId)
+    updateReqBodies(reqId)
+    // updating request
     console.log('updating request')
-    fetch(`http://localhost:3000/requests/${props.requestId}`, {
+    fetch(`http://localhost:3000/requests/${reqId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -80,13 +84,87 @@ const Request = (props) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log(props.requestId)
+        console.log(reqId)
         console.log(data.id)
         let updRequests = [...props.requests].map(req => {
-          return req.id == props.requestId ? data : req}) // <-- integer vs string
+          return req.id == reqId ? data : req}) // <-- integer vs string
         console.log('updRequests', updRequests)
         props.updateRequests(updRequests)
       })
+  }
+  // const updateRequest = (id) => {
+  //   console.log('updating request')
+  //   fetch(`http://localhost:3000/requests/${props.requestId}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       "title": props.requestTitle,
+  //       "method": props.method,
+  //       "url": props.url,
+  //       "collection_id": props.collection.id
+  //     })
+  //   })
+  //     .then(resp => resp.json())
+  //     .then(data => {
+  //       console.log(props.requestId)
+  //       console.log(data.id)
+  //       let updRequests = [...props.requests].map(req => {
+  //         return req.id == props.requestId ? data : req}) // <-- integer vs string
+  //       console.log('updRequests', updRequests)
+  //       props.updateRequests(updRequests)
+  //     })
+  // }
+
+  const updateReqAttribs = (reqId) => {
+    props.attribs.forEach(attrib => {
+      // updating attrib
+      if (attrib.request_id && !attrib.for_deletion) {
+        fetch(`http://localhost:3000/attribs/${attrib.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "id": attrib.id,
+            "attr_type": attrib.attr_type,
+            "key": attrib.key,
+            "value": attrib.value,
+            "description": attrib.description,
+            "request_id": reqId
+          })
+        })
+      // creating attrib
+      } else if (!attrib.request_id && !attrib.for_deletion) {
+        fetch('http://localhost:3000/attribs/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "attr_type": attrib.attr_type,
+            "key": attrib.key,
+            "value": attrib.value,
+            "description": attrib.description,
+            "request_id": reqId
+          })
+        })
+      // deleting attrib
+      } else if (attrib.for_deletion) {
+        fetch(`http://localhost:3000/attribs/${attrib.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      }
+    })
+
+  }
+
+  const updateReqBodies = (reqId) => {
+
   }
 
   return (
@@ -195,6 +273,8 @@ const mapStateToProps = state => {
     requestTitle: state.requestTitle,
     method: state.method,
     url: state.url,
+    attribs: state.attribs,
+    bodies: state.bodies,
     requestTab: state.requestTab
   }
 }
@@ -207,6 +287,8 @@ const mapDispatchToProps = dispatch => {
     setRequestTitle: (data) => dispatch(setRequestTitle(data)),
     selectMethod: (data) => dispatch(selectMethod(data)),
     setUrl: (data) => dispatch(setUrl(data)),
+    updateAttribs: (data) => dispatch(updateAttribs(data)),
+    updateBodies: (data) => dispatch(updateBodies(data)),
     switchRequestTab: (data) => dispatch(switchRequestTab(data))
   }
 }

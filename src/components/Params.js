@@ -34,9 +34,7 @@ class Params extends React.Component {
               { title: 'Value', field: 'value' },
               { title: 'Description (optional)', field: 'description' }
             ]}
-            // data={[
-            //   { key: 'country', value: 'US', description: 'none' }
-            // ]}
+
             data={ paramsList }
             
             editable={{
@@ -74,17 +72,32 @@ class Params extends React.Component {
                 new Promise((resolve) => {
                   setTimeout(() => {
                     {
-                      let data = this.props.attribs
+                      const data = this.props.attribs
                       const index = data.indexOf(oldData)
-                      data.splice(index, 1)
-                      this.props.updateAttribs(data)
-                      this.setState({
+                      data[index] = {...oldData, ...{for_deletion: true}}
+                      this.props.updateAttribs(data)                
+                      this.setState({ 
                         paramsList: data
                       }, () => resolve())
                     }
                     resolve()
                   }, 1000)
                 })
+              // onRowDelete: oldData =>
+              //   new Promise((resolve) => {
+              //     setTimeout(() => {
+              //       {
+              //         let data = this.props.attribs
+              //         const index = data.indexOf(oldData)
+              //         data.splice(index, 1)
+              //         this.props.updateAttribs(data)
+              //         this.setState({
+              //           paramsList: data
+              //         }, () => resolve())
+              //       }
+              //       resolve()
+              //     }, 1000)
+              //   })
             }}
           />
         </div>

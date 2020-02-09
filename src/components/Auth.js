@@ -8,7 +8,6 @@ class Auth extends React.Component {
 
   state = {
     auth: 'noAuth',  // 'apiKey'
-    // addTo: 'headers'  // 'params'
     keysList: []
   }
 
@@ -18,13 +17,6 @@ class Auth extends React.Component {
       auth: e.target.value
     })
   }
-
-  // handleAddTo = (e) => {
-  //   console.log('Add to', e.target.value)
-  //   this.setState({
-  //     addTo: e.target.value
-  //   })
-  // }
 
   render () {
 
@@ -57,7 +49,6 @@ class Auth extends React.Component {
             <MaterialTable
               icons={tableIcons}
               title="Authorization"
-              // totalCount={1}   // <-- !!!!
               options={{
                 search: false,
                 paging: false,
@@ -69,16 +60,6 @@ class Auth extends React.Component {
                 { title: 'Value', field: 'value' },
                 { title: 'Add to (headers/params)', field: 'description' }
               ]}
-              // columns={[
-              //   { title: 'Key', field: 'key' },
-              //   { title: 'Value', field: 'value' },
-              //   { title: 'Add to', field: 'description', render: rowData => (
-              //     <select onChange={this.handleAddTo} value={keysList[0].description}>
-              //       <option value="headers">Headers</option>
-              //       <option value="params">Params</option>
-              //     </select>
-              //   )}
-              // ]}
 
               data={ keysList }
               
@@ -119,7 +100,7 @@ class Auth extends React.Component {
                       {
                         let data = this.props.attribs
                         const index = data.indexOf(oldData)
-                        data.splice(index, 1)
+                        data[index] = {...oldData, ...{for_deletion: true}}
                         this.props.updateAttribs(data)
                         this.setState({
                           keysList: data
@@ -128,6 +109,21 @@ class Auth extends React.Component {
                       resolve()
                     }, 1000)
                   })
+                // onRowDelete: oldData =>
+                //   new Promise((resolve) => {
+                //     setTimeout(() => {
+                //       {
+                //         let data = this.props.attribs
+                //         const index = data.indexOf(oldData)
+                //         data.splice(index, 1)
+                //         this.props.updateAttribs(data)
+                //         this.setState({
+                //           keysList: data
+                //         }, () => resolve())
+                //       }
+                //       resolve()
+                //     }, 1000)
+                //   })
               }}
             />
           </div>
