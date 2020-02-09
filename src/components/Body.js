@@ -17,7 +17,9 @@ import "ace-builds/src-noconflict/theme-solarized_light"
 class Body extends React.Component {
 
   state = {
-    body: 'None' // 'Form-Data'/'Raw'
+    body: 'None', // 'Form-Data'/'Raw'
+    fdBodiesList: [],
+    rawBody: ''
   }
 
   handleBody = (e) => {
@@ -33,20 +35,24 @@ class Body extends React.Component {
 
   render () {
 
-    // console.log('bodies: ', this.props.bodies)
-    let reqFdBody = this.props.bodies.filter( body =>
+    let fdBodiesList = this.props.bodies.filter( body =>
       body.body_type === 'Form-Data'
     )
-    let reqRawBody = this.props.bodies.find( ({body_type}) =>
+    // let reqFdBody = this.props.bodies.filter( body =>
+    //   body.body_type === 'Form-Data'
+    // )
+    let rawBody = this.props.bodies.find( ({body_type}) =>
       body_type === 'Raw'
     )
-    // console.log('raw body: ', reqRawBody)
+    // let reqRawBody = this.props.bodies.find( ({body_type}) =>
+    //   body_type === 'Raw'
+    // )
 
     return (
       <Fragment>
         <h4>Body</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <label className="btn btn-outline-primary">
+          <label className="btn btn-outline-primary active">
             <input type="radio" name="body-tabs" value="None" 
                    onChange={this.handleBody} checked={this.state.body === 'None'}
                    onClick={this.handleBody} />
@@ -82,10 +88,9 @@ class Body extends React.Component {
                 { title: 'Description', field: 'description' }
               ]}
               // data={[
-              //   { key: 'country', value: 'US', description: 'none' },
-              //   { key: 'city', value: 'New York', description: 'none' }
+              //   { key: 'country', value: 'US', description: 'none' }
               // ]}
-              data={ reqFdBody }
+              data={ fdBodiesList }
               // options={{ selection: true }}
               // actions={[
               //   {
@@ -96,7 +101,7 @@ class Body extends React.Component {
               // ]}
               editable={{
                 onRowAdd: newData =>
-                  new Promise((resolve, reject) => {
+                  new Promise((resolve) => {
                     setTimeout(() => {
                       {
                         /* const data = this.state.data;
@@ -143,7 +148,7 @@ class Body extends React.Component {
               width="100%"
               height="150px"
               placeholder="enter request body here"
-              value={ reqRawBody && reqRawBody.raw_body }
+              value={ rawBody && rawBody.raw_body }
               onChange={this.handleEditor}
               name="UNIQUE_ID_OF_DIV"
               editorProps={{ $blockScrolling: true }}

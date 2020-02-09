@@ -13,8 +13,6 @@ const Request = (props) => {
   const handleNewRequest = () => {
     console.log('New Request')
     props.setRequestId(null)
-    // creating new request !!! need to wait untill store updated
-    // createRequest()  // ???????
   }
 
   const handleRequestTitle = e => {
