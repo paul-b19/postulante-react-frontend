@@ -51,6 +51,7 @@ class Auth extends React.Component {
           </label>
         </div>
 
+        {/***  selecting api_key tab  ***/}
         {this.state.auth === 'apiKey' && 
           <div style={{ maxWidth: "100%" }}>
             <MaterialTable

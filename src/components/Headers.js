@@ -32,7 +32,7 @@ class Headers extends React.Component {
             columns={[
               { title: 'Key', field: 'key' },
               { title: 'Value', field: 'value' },
-              { title: 'Description', field: 'description' }
+              { title: 'Description (optional)', field: 'description' }
             ]}
             // data={[
             //   { key: 'country', value: 'US', description: 'none' }

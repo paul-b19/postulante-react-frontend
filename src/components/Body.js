@@ -31,6 +31,37 @@ class Body extends React.Component {
 
   handleEditor = (newValue) => {
     console.log("editor new value", newValue)
+    let rawBody = this.props.bodies.find( ({body_type}) =>
+      body_type === 'Raw'
+    )
+    // updating rawBody
+    if (rawBody && newValue) {
+      const data = this.props.bodies
+      const index = data.indexOf(rawBody)
+      data[index].raw_body = newValue
+      this.props.updateBodies(data)                
+      this.setState({
+        rawBody: newValue
+      })
+    // creating rawBody
+    } else if (!rawBody && newValue) {
+      const data = this.props.bodies
+      let newBody = {body_type: 'Raw', raw_body: newValue}
+      data.push(newBody)
+      this.props.updateBodies(data)
+      this.setState({
+        rawBody: newValue
+      })
+    // deleting rawBody
+    } else if (rawBody && !newValue) {
+      let data = this.props.bodies
+      const index = data.indexOf(rawBody)
+      data.splice(index, 1)
+      this.props.updateBodies(data)
+      this.setState({
+        rawBody: newValue
+      })
+    }
   }
 
   render () {
@@ -38,15 +69,9 @@ class Body extends React.Component {
     let fdBodiesList = this.props.bodies.filter( body =>
       body.body_type === 'Form-Data'
     )
-    // let reqFdBody = this.props.bodies.filter( body =>
-    //   body.body_type === 'Form-Data'
-    // )
     let rawBody = this.props.bodies.find( ({body_type}) =>
       body_type === 'Raw'
     )
-    // let reqRawBody = this.props.bodies.find( ({body_type}) =>
-    //   body_type === 'Raw'
-    // )
 
     return (
       <Fragment>
@@ -72,6 +97,7 @@ class Body extends React.Component {
           </label>
         </div>
 
+        {/***  selecting form-data tab  ***/}
         {this.state.body === 'Form-Data' &&
           <div style={{ maxWidth: "100%" }}>
             <MaterialTable
@@ -85,61 +111,63 @@ class Body extends React.Component {
               columns={[
                 { title: 'Key', field: 'key' },
                 { title: 'Value', field: 'value' },
-                { title: 'Description', field: 'description' }
+                { title: 'Description (optional)', field: 'description' }
               ]}
-              // data={[
-              //   { key: 'country', value: 'US', description: 'none' }
-              // ]}
+
               data={ fdBodiesList }
-              // options={{ selection: true }}
-              // actions={[
-              //   {
-              //     tooltip: 'Remove All Selected Users',
-              //     icon: 'delete',
-              //     onClick: (evt, data) => alert('You want to delete ' + data.length + ' rows')
-              //   }
-              // ]}
+              
               editable={{
                 onRowAdd: newData =>
                   new Promise((resolve) => {
                     setTimeout(() => {
                       {
-                        /* const data = this.state.data;
-                        data.push(newData);
-                        this.setState({ data }, () => resolve()); */
+                        const data = this.props.bodies
+                        let newBody = {...newData, ...{body_type: 'Form-Data'}}
+                        data.push(newBody)
+                        this.props.updateBodies(data)
+                        this.setState({
+                          fdBodiesList: data
+                        }, () => resolve())
                       }
-                      resolve();
-                    }, 1000);
+                      resolve()
+                    }, 1000)
                   }),
                 onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve, reject) => {
+                  new Promise((resolve) => {
                     setTimeout(() => {
                       {
-                        /* const data = this.state.data;
-                        const index = data.indexOf(oldData);
-                        data[index] = newData;                
-                        this.setState({ data }, () => resolve()); */
+                        const data = this.props.bodies
+                        const index = data.indexOf(oldData)
+                        data[index] = newData
+                        this.props.updateBodies(data)                
+                        this.setState({
+                          fdBodiesList: data
+                        }, () => resolve())
                       }
-                      resolve();
-                    }, 1000);
+                      resolve()
+                    }, 1000)
                   }),
                 onRowDelete: oldData =>
-                  new Promise((resolve, reject) => {
+                  new Promise((resolve) => {
                     setTimeout(() => {
                       {
-                        /* let data = this.state.data;
-                        const index = data.indexOf(oldData);
-                        data.splice(index, 1);
-                        this.setState({ data }, () => resolve()); */
+                        let data = this.props.bodies
+                        const index = data.indexOf(oldData)
+                        data.splice(index, 1)
+                        this.props.updateBodies(data)
+                        this.setState({
+                          fdBodiesList: data
+                        }, () => resolve())
                       }
-                      resolve();
-                    }, 1000);
+                      resolve()
+                    }, 1000)
                   })
               }}
             />
           </div>
         }
 
+        {/***  selecting raw tab  ***/}
         {this.state.body === 'Raw' &&
           <div style={{ maxWidth: "100%" }}>
             <AceEditor
