@@ -21,7 +21,7 @@ class Auth extends React.Component {
   render () {
 
     let keysList = this.props.attribs.filter( attrib =>
-      attrib.attr_type === 'auth'
+      attrib.attr_type === 'auth' && !attrib.for_deletion
     )
     // let paramsListX = this.state.paramsList
 

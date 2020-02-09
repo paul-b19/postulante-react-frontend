@@ -43,6 +43,7 @@ const Request = (props) => {
       createRequest()
   }
 
+  // creating new request
   const createRequest = () => {
     console.log('creating request')
     fetch('http://localhost:3000/requests', {
@@ -59,11 +60,33 @@ const Request = (props) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        props.setRequestId(data.id)
-        props.updateRequests([...props.requests, data])
+        updateRequest(data.id)
+        // props.setRequestId(data.id)
+        // props.updateRequests([...props.requests, data])
       })
   }
+  // const createRequest = () => {
+  //   console.log('creating request')
+  //   fetch('http://localhost:3000/requests', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       "title": props.requestTitle,
+  //       "method": props.method,
+  //       "url": props.url,
+  //       "collection_id": props.collection.id
+  //     })
+  //   })
+  //     .then(resp => resp.json())
+  //     .then(data => {
+  //       props.setRequestId(data.id)
+  //       props.updateRequests([...props.requests, data])
+  //     })
+  // }
   
+  // updating existing request
   const updateRequest = (reqId) => {
     // updating requests Attribs and Bodies
     updateReqAttribs(reqId)
@@ -153,10 +176,7 @@ const Request = (props) => {
       // deleting attrib
       } else if (attrib.for_deletion) {
         fetch(`http://localhost:3000/attribs/${attrib.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          method: 'DELETE'
         })
       }
     })
@@ -164,6 +184,47 @@ const Request = (props) => {
   }
 
   const updateReqBodies = (reqId) => {
+    props.bodies.forEach(body => {
+      // updating body
+      if (body.request_id && !body.for_deletion) {
+        fetch(`http://localhost:3000/bodies/${body.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "id": body.id,
+            "body_type": body.body_type,
+            "key": body.key,
+            "value": body.value,
+            "description": body.description,
+            "raw_body": body.raw_body,
+            "request_id": reqId
+          })
+        })
+      // creating body
+      } else if (!body.request_id && !body.for_deletion) {
+        fetch('http://localhost:3000/bodies/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "body_type": body.body_type,
+            "key": body.key,
+            "value": body.value,
+            "description": body.description,
+            "raw_body": body.raw_body,
+            "request_id": reqId
+          })
+        })
+      // deleting body
+      } else if (body.for_deletion) {
+        fetch(`http://localhost:3000/bodies/${body.id}`, {
+          method: 'DELETE'
+        })
+      }
+    })
 
   }
 

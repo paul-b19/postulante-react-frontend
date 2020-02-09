@@ -88,7 +88,7 @@ class Body extends React.Component {
   render () {
 
     let fdBodiesList = this.props.bodies.filter( body =>
-      body.body_type === 'Form-Data'
+      body.body_type === 'Form-Data' && !body.for_deletion
     )
     let rawBody = this.props.bodies.find( ({body_type}) =>
       body_type === 'Raw'

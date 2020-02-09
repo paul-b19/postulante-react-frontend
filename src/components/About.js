@@ -21,7 +21,10 @@ const About = () => {
               <ul>
                 <li>React.js</li>
                 <li>Redux</li>
+                <li>Material-UI: material-table</li>
+                <li>React-Ace</li>
                 <li>Bootstrap</li>
+                <li>Font Awesome</li>
                 <li>Heroku</li>
               </ul>
               <h4><a href=""

@@ -13,7 +13,7 @@ class Params extends React.Component {
   render() {
   
     let paramsList = this.props.attribs.filter( attrib =>
-      attrib.attr_type === 'params'
+      attrib.attr_type === 'params' && !attrib.for_deletion
     )
     // let paramsListX = this.state.paramsList
   

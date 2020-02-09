@@ -13,7 +13,7 @@ class Headers extends React.Component {
   render() {
 
     let headersList = this.props.attribs.filter( attrib =>
-      attrib.attr_type === 'headers'
+      attrib.attr_type === 'headers' && !attrib.for_deletion
     )
     // let headersListX = this.state.headersList
   
