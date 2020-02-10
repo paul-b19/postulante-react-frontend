@@ -65,7 +65,10 @@ const Request = (props) => {
       .then(data => {
         updateReqAttribs(data.id)
         updateReqBodies(data.id)
-        props.setRequestId(data.id)
+        setTimeout(() => {             // <-- ????
+          props.setRequestId(data.id)
+        }, 500)
+        // props.setRequestId(data.id)
         props.updateRequests([...props.requests, data])
       })
   }
@@ -97,7 +100,11 @@ const Request = (props) => {
           return req.id == reqId ? data : req}) // <-- integer vs string
         console.log('updRequests', updRequests)
         props.updateRequests(updRequests)
-        props.setRequestId(reqId)   // <-- ????
+
+        setTimeout(() => {             // <-- ????
+          props.setRequestId(reqId)
+        }, 500)
+        // props.setRequestId(reqId)   // <-- ????
       })
   }
 
@@ -189,16 +196,76 @@ const Request = (props) => {
     })
   }
 
-  // and here the magic begins
+  // called on Send button click
   const handleSend = () => {
     if (props.method === 'GET') {
       fetchGet()
+    } else if (props.method === 'POST') {
+      fetchPost()
+    } else if (props.method === 'PUT' || props.method === 'PATCH') {
+      fetchPut()
     } else if (props.method === 'DELETE') {
       fetchDelete()
     }
   }
 
+  // preparing data for request
+  const params = props.attribs.filter( attrib =>
+    attrib.attr_type === 'params' && !attrib.for_deletion
+  )
+  const auth = props.attribs.find( ({attr_type, for_deletion}) => // ???
+  attr_type === 'auth' && !for_deletion
+  )
+  const headers = props.attribs.filter( attrib =>
+    attrib.attr_type === 'headers' && !attrib.for_deletion
+  )
+  const body = props.bodies.find( ({body_type, for_deletion}) =>  // ?????
+  body_type === 'Raw' && !for_deletion
+  )
+
+  const url = () => {
+
+  }
+
+
   const fetchGet = () => {
+    fetch(props.url)
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
+    })
+  }
+  const fetchPost = () => {
+    let rowBody = () => {
+      let rb = body.raw_body.replace(/(↵)/g, "")
+      rb = rb.replace(/(')/g, '"')
+      rb = rb.replace(/( )/g, '')
+      return rb
+    }
+    console.log('body', body)
+    console.log('body.raw_body', body.raw_body)
+    console.log('rawBody', rowBody())
+    // console.log('JSON.parse', JSON.parse(body.raw_body))
+    fetch(props.url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(JSON.parse(rowBody()))
+      // body: JSON.stringify({
+      //   title: 'foo',
+      //   body: 'bar',
+      //   userId: 1
+      // })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
+    })
+  }
+  const fetchPut = () => {
     fetch(props.url)
     .then(resp => resp.json())
     .then(data => {
