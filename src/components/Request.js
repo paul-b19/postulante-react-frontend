@@ -10,6 +10,7 @@ const Request = (props) => {
     props.setCollection(JSON.parse(e.target.value))
   }
 
+  // resetting Store state to default values
   const handleNewRequest = () => {
     console.log('New Request')
     props.setRequestId(null)
@@ -30,12 +31,13 @@ const Request = (props) => {
     props.selectMethod(e.target.value)
   }
 
+  // switching tabs Params/Auth/Headers/Body
   const handleTab = e => {
     console.log(e.target.value)
     props.switchRequestTab(e.target.value)
   }
 
-  // creating new request or updating existing one
+  // creating new request or updating existing one (called on Save button click)
   const handleSave = () => {
     props.requestId ?
       updateRequest(props.requestId)
@@ -43,7 +45,7 @@ const Request = (props) => {
       createRequest()
   }
 
-  // creating new request
+  // creating new request (called from handleSave)
   const createRequest = () => {
     console.log('creating request')
     fetch('http://localhost:3000/requests', {
@@ -60,33 +62,14 @@ const Request = (props) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        updateRequest(data.id)
-        // props.setRequestId(data.id)
-        // props.updateRequests([...props.requests, data])
+        updateReqAttribs(data.id)
+        updateReqBodies(data.id)
+        props.setRequestId(data.id)
+        props.updateRequests([...props.requests, data])
       })
   }
-  // const createRequest = () => {
-  //   console.log('creating request')
-  //   fetch('http://localhost:3000/requests', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       "title": props.requestTitle,
-  //       "method": props.method,
-  //       "url": props.url,
-  //       "collection_id": props.collection.id
-  //     })
-  //   })
-  //     .then(resp => resp.json())
-  //     .then(data => {
-  //       props.setRequestId(data.id)
-  //       props.updateRequests([...props.requests, data])
-  //     })
-  // }
   
-  // updating existing request
+  // updating existing request (called from handleSave)
   const updateRequest = (reqId) => {
     // updating requests Attribs and Bodies
     updateReqAttribs(reqId)
@@ -113,33 +96,11 @@ const Request = (props) => {
           return req.id == reqId ? data : req}) // <-- integer vs string
         console.log('updRequests', updRequests)
         props.updateRequests(updRequests)
+        props.setRequestId(reqId)   // <-- ????
       })
   }
-  // const updateRequest = (id) => {
-  //   console.log('updating request')
-  //   fetch(`http://localhost:3000/requests/${props.requestId}`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       "title": props.requestTitle,
-  //       "method": props.method,
-  //       "url": props.url,
-  //       "collection_id": props.collection.id
-  //     })
-  //   })
-  //     .then(resp => resp.json())
-  //     .then(data => {
-  //       console.log(props.requestId)
-  //       console.log(data.id)
-  //       let updRequests = [...props.requests].map(req => {
-  //         return req.id == props.requestId ? data : req}) // <-- integer vs string
-  //       console.log('updRequests', updRequests)
-  //       props.updateRequests(updRequests)
-  //     })
-  // }
 
+  // updating request attribs (called from updateRequest() or createRequest())
   const updateReqAttribs = (reqId) => {
     props.attribs.forEach(attrib => {
       // updating attrib
@@ -180,9 +141,9 @@ const Request = (props) => {
         })
       }
     })
-
   }
 
+  // updating request bodies (called from updateRequest() or createRequest())
   const updateReqBodies = (reqId) => {
     props.bodies.forEach(body => {
       // updating body
@@ -225,7 +186,6 @@ const Request = (props) => {
         })
       }
     })
-
   }
 
   return (
