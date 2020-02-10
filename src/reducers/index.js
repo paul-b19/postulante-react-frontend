@@ -11,15 +11,7 @@ let defaultState = {
   attribs: [],
   bodies: [],
   requestTab: 'params',
-  response: `function onLoad(editor) {
-    console.log("i've loaded");
-  }`,
-
-  // xxxParams: [],
-  // xxxAuth: [],
-  // xxxHeaders: [],
-  // xxxFdBody: [],
-  // xxxRawBody: []
+  response: 'Response will be rendered here'
 }
 
 const globalReducer = (prevState = defaultState, action) => {

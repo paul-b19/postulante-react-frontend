@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { setCollection, updateRequests, setRequestId, setRequestTitle, 
-         selectMethod, setUrl, switchRequestTab, updateAttribs, updateBodies } from  '../actions'
+         selectMethod, setUrl, switchRequestTab, updateAttribs, 
+         updateBodies, updateResponse } from  '../actions'
 
 const Request = (props) => {
 
@@ -188,6 +189,32 @@ const Request = (props) => {
     })
   }
 
+  // and here the magic begins
+  const handleSend = () => {
+    fetch(props.url)
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
+      // props.updateResponse(JSON.stringify(data))
+    })
+  }
+  // const handleSend = () => {
+  //   fetch(url, {
+  //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  //     mode: 'cors', // no-cors, *cors, same-origin
+  //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+  //     credentials: 'same-origin', // include, *same-origin, omit
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //       // 'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     redirect: 'follow', // manual, *follow, error
+  //     referrerPolicy: 'no-referrer', // no-referrer, *client
+  //     body: JSON.stringify(data) // body data type must match "Content-Type" header
+  //   })
+  // }
+
   return (
     <Fragment>
       <ul className="nav nav-pills">
@@ -244,13 +271,12 @@ const Request = (props) => {
           </div>
         </li>
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary">Send</button>
+          <button type="button" className="btn btn-outline-primary"
+                  onClick={handleSend}>Send</button>
         </li>
         <li className="nav-item">
           <button type="button" className="btn btn-outline-primary"
-                  onClick={handleSave}>
-            Save
-          </button>
+                  onClick={handleSave}>Save</button>
         </li>
       </ul>
 
@@ -296,7 +322,8 @@ const mapStateToProps = state => {
     url: state.url,
     attribs: state.attribs,
     bodies: state.bodies,
-    requestTab: state.requestTab
+    requestTab: state.requestTab,
+    response: state.response
   }
 }
 
@@ -310,7 +337,8 @@ const mapDispatchToProps = dispatch => {
     setUrl: (data) => dispatch(setUrl(data)),
     updateAttribs: (data) => dispatch(updateAttribs(data)),
     updateBodies: (data) => dispatch(updateBodies(data)),
-    switchRequestTab: (data) => dispatch(switchRequestTab(data))
+    switchRequestTab: (data) => dispatch(switchRequestTab(data)),
+    updateResponse: (data) => dispatch(updateResponse(data))
   }
 }
 

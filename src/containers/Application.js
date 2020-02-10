@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setCollection, setRequestTitle, selectMethod, setUrl, updateAttribs, updateBodies } from '../actions'
+import { setCollection, setRequestTitle, selectMethod, setUrl, 
+         updateAttribs, updateBodies, updateResponse } from '../actions'
 import NavBar from '../components/NavBar'
 import About from '../components/About'
 import Response from '../components/Response'
@@ -27,6 +28,7 @@ class Application extends React.Component {
           // setting collection for collection drop down
           this.props.setCollection(this.props.collections.find(collection => 
             collection.id == data.collection_id))
+          this.props.updateResponse('Response will be rendered here')
         })
     :
       this.props.setRequestTitle('Untitled')
@@ -34,6 +36,7 @@ class Application extends React.Component {
       this.props.setUrl('')
       this.props.updateAttribs([])
       this.props.updateBodies([])
+      this.props.updateResponse('Response will be rendered here')
   }
   
   render () {
@@ -67,7 +70,8 @@ const mapDispatchToProps = dispatch => {
     selectMethod: (data) => dispatch(selectMethod(data)),
     setUrl: (data) => dispatch(setUrl(data)),
     updateAttribs: (data) => dispatch(updateAttribs(data)),
-    updateBodies: (data) => dispatch(updateBodies(data))
+    updateBodies: (data) => dispatch(updateBodies(data)),
+    updateResponse: (data) => dispatch(updateResponse(data))
   }
 }
 

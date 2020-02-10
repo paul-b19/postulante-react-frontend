@@ -5,12 +5,8 @@ import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
 
 import AceEditor from "react-ace"
-import "ace-builds/src-noconflict/mode-java"
 import "ace-builds/src-noconflict/mode-javascript"
 import "ace-builds/src-noconflict/mode-json5"
-import "ace-builds/src-noconflict/mode-xml"
-import "ace-builds/src-noconflict/mode-html"
-// import "ace-builds/src-noconflict/theme-solarized_dark"
 import "ace-builds/src-noconflict/theme-solarized_light"
 
 
@@ -43,13 +39,6 @@ class Body extends React.Component {
       this.setState({
         rawBody: newValue
       })
-      // const data = this.props.bodies
-      // const index = data.indexOf(rawBody)
-      // data[index].raw_body = newValue
-      // this.props.updateBodies(data)                
-      // this.setState({
-      //   rawBody: newValue
-      // })
     // creating rawBody
     } else if (!rawBody && newValue) {
       const data = this.props.bodies
@@ -59,13 +48,6 @@ class Body extends React.Component {
       this.setState({
         rawBody: newValue
       })
-      // const data = this.props.bodies
-      // let newBody = {body_type: 'Raw', raw_body: newValue}
-      // data.push(newBody)
-      // this.props.updateBodies(data)
-      // this.setState({
-      //   rawBody: newValue
-      // })
     // deleting rawBody
     } else if (rawBody && !newValue) {
       let data = this.props.bodies
@@ -75,13 +57,6 @@ class Body extends React.Component {
       this.setState({
         rawBody: newValue
       })
-      // let data = this.props.bodies
-      // const index = data.indexOf(rawBody)
-      // data.splice(index, 1)
-      // this.props.updateBodies(data)
-      // this.setState({
-      //   rawBody: newValue
-      // })
     }
   }
 
@@ -183,21 +158,6 @@ class Body extends React.Component {
                       resolve()
                     }, 1000)
                   })
-                // onRowDelete: oldData =>
-                //   new Promise((resolve) => {
-                //     setTimeout(() => {
-                //       {
-                //         let data = this.props.bodies
-                //         const index = data.indexOf(oldData)
-                //         data.splice(index, 1)
-                //         this.props.updateBodies(data)
-                //         this.setState({
-                //           fdBodiesList: data
-                //         }, () => resolve())
-                //       }
-                //       resolve()
-                //     }, 1000)
-                //   })
               }}
             />
           </div>
@@ -207,15 +167,28 @@ class Body extends React.Component {
         {this.state.body === 'Raw' &&
           <div style={{ maxWidth: "100%" }}>
             <AceEditor
+              className=""
+              placeholder="Enter request body here"
               mode="json5"
+              // mode="javascript"
               theme="solarized_light"
-              width="100%"
-              height="150px"
-              placeholder="enter request body here"
+              name="Raw_Body_Input"
               value={ rawBody && rawBody.raw_body }
               onChange={this.handleEditor}
-              name="UNIQUE_ID_OF_DIV"
+              // fontSize={14}
+              showPrintMargin={false}
+              width="100%"
+              height="150px"
+              // minLines={10}
+              // maxLines={50}
               editorProps={{ $blockScrolling: true }}
+              setOptions={{
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              // enableSnippets: false,
+              showLineNumbers: true,
+              tabSize: 2,
+              }}
             />
           </div>
         }

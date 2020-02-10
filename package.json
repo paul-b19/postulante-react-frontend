@@ -29,6 +29,7 @@
     "react-simple-code-editor": "^0.11.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "stringify-object": "^3.3.0",
     "vue-prism-editor": "^0.3.0"
   },
   "scripts": {
