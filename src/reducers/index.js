@@ -1,5 +1,5 @@
 let defaultState = {
-  userId: 7, 
+  userId: 10, 
   collections: [],
   collection: '',  // <-- collection object
   requests: [],

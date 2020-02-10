@@ -191,12 +191,29 @@ const Request = (props) => {
 
   // and here the magic begins
   const handleSend = () => {
+    if (props.method === 'GET') {
+      fetchGet()
+    } else if (props.method === 'DELETE') {
+      fetchDelete()
+    }
+  }
+
+  const fetchGet = () => {
     fetch(props.url)
     .then(resp => resp.json())
     .then(data => {
       console.log(data)
       props.updateResponse(data)
-      // props.updateResponse(JSON.stringify(data))
+    })
+  }
+  const fetchDelete = () => {
+    fetch(props.url, {
+      method: 'DELETE'
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
     })
   }
   // const handleSend = () => {
