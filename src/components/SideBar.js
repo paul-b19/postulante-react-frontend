@@ -34,6 +34,12 @@ class SideBar extends React.Component {
     })
   }
 
+  handleCancelCollection = () => {
+    this.setState({
+      newCollection: false
+    })
+  }
+
   handleCollectionName = e => {
     console.log(e.target.value)
     this.setState({
@@ -81,7 +87,7 @@ class SideBar extends React.Component {
         <div className="sidebar-heading">
           <img className="logo-sidebar" src={Logo} alt='Logo'/>
         </div>
-        <input className="form-control mr-sm-2" type="text" placeholder="Filter"
+        <input className="form-control mr-sm-2" type="text" placeholder="🔍 Search by title"
                value={this.props.searchValue}
                onChange={this.handleSearch} />
 
@@ -100,16 +106,21 @@ class SideBar extends React.Component {
           <div>
             {/***  creating New Collection  ***/}
             {!this.state.newCollection ? 
-              <h5 onClick={this.handleNewCollection}>✚ New Collection</h5>
+              <button onClick={this.handleNewCollection} type="button" className="btn btn-primary btn-block text-left">
+                <FontAwesomeIcon icon="plus" /> New Collection
+              </button>
             :
               <div className="input-group">
-                <div className="title-input">
-                  <input type="text" className="form-control" id="requestTitle"
-                         value={this.state.collectionName} onChange={this.handleCollectionName} />
-                </div>
-                <div className="input-group-append">
-                  <span onClick={this.handleCreateCollection} className="input-group-text">✓</span>
-                </div>
+                <input type="text" className="form-control" placeholder="New Collection" 
+                       value={this.state.collectionName} onChange={this.handleCollectionName} />
+                <span className="input-group-btn">
+                  <button onClick={this.handleCreateCollection} className="btn btn-primary" type="button">
+                    <FontAwesomeIcon icon="check" />
+                  </button>
+                  <button onClick={this.handleCancelCollection} className="btn btn-primary" type="button">
+                    <FontAwesomeIcon icon="times" />
+                  </button>
+                </span>
               </div>
             }
 

@@ -47,13 +47,16 @@ class Auth extends React.Component {
         {this.state.auth === 'apiKey' && 
           <div style={{ maxWidth: "100%" }}>
             <MaterialTable
+              style={{ backgroundColor: '#fbf1d3' }}
               icons={tableIcons}
               title="Authorization"
               options={{
                 search: false,
                 paging: false,
                 sorting: false,
-                draggable: false
+                draggable: false,
+                rowStyle: { backgroundColor: '#fdf6e3' },
+                headerStyle: { backgroundColor: '#fdf6e3' }
               }}
               columns={[
                 { title: 'Key', field: 'key' },

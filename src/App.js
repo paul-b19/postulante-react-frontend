@@ -3,9 +3,11 @@ import React from 'react'
 import SideBar from './components/SideBar'
 import Application from './containers/Application'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
+         faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faChevronRight, faChevronDown )
+library.add( faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
+             faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt )
 
 
 function App() {

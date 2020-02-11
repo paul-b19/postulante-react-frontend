@@ -22,12 +22,15 @@ class Params extends React.Component {
         <h4>Params</h4>
         <div style={{ maxWidth: "100%" }}>
           <MaterialTable
+            style={{ backgroundColor: '#fbf1d3' }}
             icons={tableIcons}
             title="Params table"
             options={{
               search: false,
               paging: false,
-              draggable: false
+              draggable: false,
+              rowStyle: { backgroundColor: '#fdf6e3' },
+              headerStyle: { backgroundColor: '#fdf6e3' }
             }}
             columns={[
               { title: 'Key', field: 'key' },
@@ -83,21 +86,6 @@ class Params extends React.Component {
                     resolve()
                   }, 1000)
                 })
-              // onRowDelete: oldData =>
-              //   new Promise((resolve) => {
-              //     setTimeout(() => {
-              //       {
-              //         let data = this.props.attribs
-              //         const index = data.indexOf(oldData)
-              //         data.splice(index, 1)
-              //         this.props.updateAttribs(data)
-              //         this.setState({
-              //           paramsList: data
-              //         }, () => resolve())
-              //       }
-              //       resolve()
-              //     }, 1000)
-              //   })
             }}
           />
         </div>

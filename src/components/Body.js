@@ -97,12 +97,15 @@ class Body extends React.Component {
         {this.state.body === 'Form-Data' &&
           <div style={{ maxWidth: "100%" }}>
             <MaterialTable
+              style={{ backgroundColor: '#fbf1d3' }}
               icons={tableIcons}
               title="Form-Data"
               options={{
                 search: false,
                 paging: false,
-                draggable: false
+                draggable: false,
+                rowStyle: { backgroundColor: '#fdf6e3' },
+                headerStyle: { backgroundColor: '#fdf6e3' }
               }}
               columns={[
                 { title: 'Key', field: 'key' },
