@@ -89,7 +89,7 @@ class SideBar extends React.Component {
         {this.props.searchValue && this.props.searchValue !== '' ?
           <div className="list-group-flush" role="tabpanel" aria-labelledby="heading">
             {this.props.requests.length && this.props.requests.map(request =>
-              request.title.startsWith(this.props.searchValue) &&
+              request.title.toLowerCase().startsWith(this.props.searchValue.toLowerCase()) &&
               <a key={request.id} id={request.id} href="#" onClick={this.handleRequestId} 
                  className="list-group-item list-group-item-action bg-light">
                 {request.title}

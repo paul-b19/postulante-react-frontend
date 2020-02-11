@@ -235,14 +235,27 @@ const Request = (props) => {
   )
   
   const url = () => {
-    if (params.length === 0) {
+    if (params.length === 0 && (!auth || auth.description.toLowerCase() !== 'params')) {
       return props.url
-    } else {
+    } else if (params.length > 0 && (!auth || auth.description.toLowerCase() !== 'params')) {
       let url = `${props.url}?`
       params.forEach(param => {
         url = url + param.key + '=' + param.value + '&'
       })
       url = url.slice(0, -1)
+      console.log('finalUrl: ', url)
+      return url
+    } else if (params.length > 0 && auth && auth.description.toLowerCase() === 'params') {
+      let url = `${props.url}?`
+      params.forEach(param => {
+        url = url + param.key + '=' + param.value + '&'
+      })
+      url = url + auth.key + '=' + auth.value
+      console.log('finalUrl: ', url)
+      return url
+    } else if (params.length === 0 && auth && auth.description.toLowerCase() === 'params') {
+      let url = `${props.url}?`
+      url = url + auth.key + '=' + auth.value
       console.log('finalUrl: ', url)
       return url
     }
@@ -257,7 +270,7 @@ const Request = (props) => {
     xHeaders.forEach(i => {
       yHeaders[i.key] = i.value
     })
-    auth && auth.description === 'headers' ? yHeaders[auth.key] = auth.value : console.log(null) // <-- do not remove!
+    auth && auth.description.toLowerCase() === 'headers' ? yHeaders[auth.key] = auth.value : console.log(null) // <-- do not remove!
     console.log(yHeaders)
     return yHeaders
   }
