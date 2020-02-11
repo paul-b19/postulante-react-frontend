@@ -11,7 +11,10 @@ let defaultState = {
   attribs: [],
   bodies: [],
   requestTab: 'params',
-  response: 'Response will be rendered here'
+  response: 'Response will be rendered here',
+
+  responseStatus: null,
+  responseStatusText: null
 }
 
 const globalReducer = (prevState = defaultState, action) => {
@@ -64,6 +67,14 @@ const globalReducer = (prevState = defaultState, action) => {
     case 'UPDATE_RESPONSE':
       return {...prevState,
         response: action.payload
+      }
+    case 'UPDATE_RESPONSE_STATUS':
+      return {...prevState,
+        responseStatus: action.payload
+      }
+    case 'UPDATE_RESPONSE_STATUS_TEXT':
+      return {...prevState,
+        responseStatusText: action.payload
       }
 
     default:

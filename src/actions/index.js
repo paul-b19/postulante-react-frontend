@@ -88,3 +88,17 @@ export function updateResponse(resp) {
     payload: resp
   }
 }
+
+export function updateResponseStatus(respStat) {
+  return {
+    type: 'UPDATE_RESPONSE_STATUS',
+    payload: respStat
+  }
+}
+
+export function updateResponseStatusText(respStatText) {
+  return {
+    type: 'UPDATE_RESPONSE_STATUS_TEXT',
+    payload: respStatText
+  }
+}

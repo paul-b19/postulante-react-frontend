@@ -199,19 +199,29 @@ const Request = (props) => {
 
   // called on Send button click
   const handleSend = () => {
-    if (props.method === 'GET' || props.method === 'DELETE') {
-      fetchGet()
-    } else if (props.method === 'POST' || props.method === 'PUT' || props.method === 'PATCH') {
-      fetchPost()
-    }
+    console.log('body', body)
+    console.log('finalBody', finalBody)
+
+    fetch(finalUrl, {
+      method: props.method,
+      headers: finalHeaders,
+      body: JSON.stringify(finalBody)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+      props.updateResponse(error)
+    })
   }
   // const handleSend = () => {
-  //   if (props.method === 'GET') {
+  //   if (props.method === 'GET' || props.method === 'DELETE') {
   //     fetchGet()
   //   } else if (props.method === 'POST' || props.method === 'PUT' || props.method === 'PATCH') {
   //     fetchPost()
-  //   } else if (props.method === 'DELETE') {
-  //     fetchDelete()
   //   }
   // }
 
@@ -220,22 +230,24 @@ const Request = (props) => {
     attr_type === 'auth' && !for_deletion
   )
 
-  // const params = props.attribs.filter( attrib =>
-  //   attrib.attr_type === 'params' && !attrib.for_deletion
-  // )
-  const params = () => {
-    const xParams = props.attribs.filter( attrib =>
-      attrib.attr_type === 'params' && !attrib.for_deletion
-    )
-    const obj = {}
-    const yParams = xParams.forEach(i => {
-      obj[i.key] = i.value
-    })
-
-  }
+  const params = props.attribs.filter( attrib =>
+    attrib.attr_type === 'params' && !attrib.for_deletion
+  )
+  
   const url = () => {
-
+    if (params.length === 0) {
+      return props.url
+    } else {
+      let url = `${props.url}?`
+      params.forEach(param => {
+        url = url + param.key + '=' + param.value + '&'
+      })
+      url = url.slice(0, -1)
+      console.log('finalUrl: ', url)
+      return url
+    }
   }
+  const finalUrl = url()
 
   const headers = () => {
     const xHeaders = props.attribs.filter( attrib =>
@@ -257,19 +269,11 @@ const Request = (props) => {
   const finalBody = body && dJSON.parse(body.raw_body)
 
 
-  // GET, DELETE requests (called from handleSend())
-  const fetchGet = () => {
-    fetch(props.url, {
-      method: props.method
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      props.updateResponse(data)
-    })
-  }
+  // // GET, DELETE requests (called from handleSend())
   // const fetchGet = () => {
-  //   fetch(props.url)
+  //   fetch(finalUrl, {
+  //     method: props.method
+  //   })
   //   .then(resp => resp.json())
   //   .then(data => {
   //     console.log(data)
@@ -277,22 +281,22 @@ const Request = (props) => {
   //   })
   // }
 
-  // POST, PUT, PATCH requests (called from handleSend())
-  const fetchPost = () => {
-    console.log('body', body)
-    console.log('finalBody', finalBody)
+  // // POST, PUT, PATCH requests (called from handleSend())
+  // const fetchPost = () => {
+  //   console.log('body', body)
+  //   console.log('finalBody', finalBody)
 
-    fetch(props.url, {
-      method: props.method,
-      headers: finalHeaders,
-      body: JSON.stringify(finalBody)
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      props.updateResponse(data)
-    })
-  }
+  //   fetch(finalUrl, {
+  //     method: props.method,
+  //     headers: finalHeaders,
+  //     body: JSON.stringify(finalBody)
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(data => {
+  //     console.log(data)
+  //     props.updateResponse(data)
+  //   })
+  // }
 
   return (
     <Fragment>
