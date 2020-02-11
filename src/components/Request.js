@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setCollection, updateRequests, setRequestId, setRequestTitle, 
          selectMethod, setUrl, switchRequestTab, updateAttribs, 
          updateBodies, updateResponse } from  '../actions'
+import dJSON from 'dirty-json'
 
 const Request = (props) => {
 
@@ -68,7 +69,7 @@ const Request = (props) => {
         setTimeout(() => {             // <-- ????
           props.setRequestId(data.id)
         }, 500)
-        // props.setRequestId(data.id)
+        // props.setRequestId(data.id) // <-- ????
         props.updateRequests([...props.requests, data])
       })
   }
@@ -198,66 +199,68 @@ const Request = (props) => {
 
   // called on Send button click
   const handleSend = () => {
-    if (props.method === 'GET') {
+    if (props.method === 'GET' || props.method === 'DELETE') {
       fetchGet()
-    } else if (props.method === 'POST') {
+    } else if (props.method === 'POST' || props.method === 'PUT' || props.method === 'PATCH') {
       fetchPost()
-    } else if (props.method === 'PUT' || props.method === 'PATCH') {
-      fetchPut()
-    } else if (props.method === 'DELETE') {
-      fetchDelete()
     }
   }
+  // const handleSend = () => {
+  //   if (props.method === 'GET') {
+  //     fetchGet()
+  //   } else if (props.method === 'POST' || props.method === 'PUT' || props.method === 'PATCH') {
+  //     fetchPost()
+  //   } else if (props.method === 'DELETE') {
+  //     fetchDelete()
+  //   }
+  // }
 
   // preparing data for request
-  const params = props.attribs.filter( attrib =>
-    attrib.attr_type === 'params' && !attrib.for_deletion
-  )
-  const auth = props.attribs.find( ({attr_type, for_deletion}) => // ???
-  attr_type === 'auth' && !for_deletion
-  )
-  const headers = props.attribs.filter( attrib =>
-    attrib.attr_type === 'headers' && !attrib.for_deletion
-  )
-  const body = props.bodies.find( ({body_type, for_deletion}) =>  // ?????
-  body_type === 'Raw' && !for_deletion
+  const auth = props.attribs.find( ({attr_type, for_deletion}) => 
+    attr_type === 'auth' && !for_deletion
   )
 
+  // const params = props.attribs.filter( attrib =>
+  //   attrib.attr_type === 'params' && !attrib.for_deletion
+  // )
+  const params = () => {
+    const xParams = props.attribs.filter( attrib =>
+      attrib.attr_type === 'params' && !attrib.for_deletion
+    )
+    const obj = {}
+    const yParams = xParams.forEach(i => {
+      obj[i.key] = i.value
+    })
+
+  }
   const url = () => {
 
   }
 
+  const headers = () => {
+    const xHeaders = props.attribs.filter( attrib =>
+      attrib.attr_type === 'headers' && !attrib.for_deletion
+    )
+    const yHeaders = {}
+    xHeaders.forEach(i => {
+      yHeaders[i.key] = i.value
+    })
+    auth && auth.description === 'headers' ? yHeaders[auth.key] = auth.value : console.log(null) // <-- do not remove!
+    console.log(yHeaders)
+    return yHeaders
+  }
+  const finalHeaders = headers()
 
+  const body = props.bodies.find( ({body_type, for_deletion}) => 
+    body_type === 'Raw' && !for_deletion
+  )
+  const finalBody = body && dJSON.parse(body.raw_body)
+
+
+  // GET, DELETE requests (called from handleSend())
   const fetchGet = () => {
-    fetch(props.url)
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      props.updateResponse(data)
-    })
-  }
-  const fetchPost = () => {
-    let rowBody = () => {
-      let rb = body.raw_body.replace(/(↵)/g, "")
-      rb = rb.replace(/(')/g, '"')
-      rb = rb.replace(/( )/g, '')
-      return rb
-    }
-    console.log('body', body)
-    console.log('body.raw_body', body.raw_body)
-    console.log('rawBody', rowBody())
-    // console.log('JSON.parse', JSON.parse(body.raw_body))
     fetch(props.url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(JSON.parse(rowBody()))
-      // body: JSON.stringify({
-      //   title: 'foo',
-      //   body: 'bar',
-      //   userId: 1
-      // })
+      method: props.method
     })
     .then(resp => resp.json())
     .then(data => {
@@ -265,39 +268,31 @@ const Request = (props) => {
       props.updateResponse(data)
     })
   }
-  const fetchPut = () => {
-    fetch(props.url)
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      props.updateResponse(data)
-    })
-  }
-  const fetchDelete = () => {
-    fetch(props.url, {
-      method: 'DELETE'
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
-      props.updateResponse(data)
-    })
-  }
-  // const handleSend = () => {
-  //   fetch(url, {
-  //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-  //     mode: 'cors', // no-cors, *cors, same-origin
-  //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  //     credentials: 'same-origin', // include, *same-origin, omit
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //       // 'Content-Type': 'application/x-www-form-urlencoded',
-  //     },
-  //     redirect: 'follow', // manual, *follow, error
-  //     referrerPolicy: 'no-referrer', // no-referrer, *client
-  //     body: JSON.stringify(data) // body data type must match "Content-Type" header
+  // const fetchGet = () => {
+  //   fetch(props.url)
+  //   .then(resp => resp.json())
+  //   .then(data => {
+  //     console.log(data)
+  //     props.updateResponse(data)
   //   })
   // }
+
+  // POST, PUT, PATCH requests (called from handleSend())
+  const fetchPost = () => {
+    console.log('body', body)
+    console.log('finalBody', finalBody)
+
+    fetch(props.url, {
+      method: props.method,
+      headers: finalHeaders,
+      body: JSON.stringify(finalBody)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      props.updateResponse(data)
+    })
+  }
 
   return (
     <Fragment>
