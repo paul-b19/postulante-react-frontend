@@ -25,7 +25,6 @@ const Response = (props) => {
             <h5><FontAwesomeIcon icon="sync-alt" className="fa-spin" /></h5>
           :
             null}
-          {/* <h5><FontAwesomeIcon icon="sync-alt" className="fa-spin" /></h5> */}
         </div>
         <div className="p-2 bd-highlight">
           {props.responseStatus && props.responseStatus !== 'spin' ? 
@@ -46,7 +45,7 @@ const Response = (props) => {
         width="100%"
         height="300px"
         // minLines={10}
-        // maxLines={50}
+        // maxLines={20}
         readOnly={true}
         value={response}
         // fontSize={14}

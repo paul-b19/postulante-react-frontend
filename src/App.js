@@ -5,11 +5,14 @@ import Application from './containers/Application'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
          faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
-         faQuoteLeft, faQuoteRight, faCogs, faBolt, faSave, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+         faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, 
+         faSyncAlt, faDatabase, faGem, faTable, faHandSpock } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add( faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
              faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
-             faQuoteLeft, faQuoteRight, faCogs, faBolt, faSave, faSyncAlt )
+             faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, faSyncAlt, 
+             faDatabase, faGem, faTable, faHandSpock, fab )
 
 
 function App() {

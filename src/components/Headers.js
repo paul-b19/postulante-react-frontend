@@ -20,12 +20,12 @@ class Headers extends React.Component {
   
     return (
       <Fragment>
-        <h4><FontAwesomeIcon icon="cogs" /> Headers</h4>
+        <h4><FontAwesomeIcon icon="cog" /> Headers</h4>
         <div style={{ maxWidth: "100%" }}>
           <MaterialTable
             style={{ backgroundColor: '#fbf1d3' }}
             icons={tableIcons}
-            title="Headers table"
+            title="Edit headers"
             options={{
               search: false,
               paging: false,

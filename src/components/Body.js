@@ -71,7 +71,7 @@ class Body extends React.Component {
 
     return (
       <Fragment>
-        <h4><FontAwesomeIcon icon="cogs" /> Body</h4>
+        <h4><FontAwesomeIcon icon="cog" /> Body</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-outline-primary active">
             <input type="radio" name="body-tabs" value="None" 
@@ -99,7 +99,7 @@ class Body extends React.Component {
             <MaterialTable
               style={{ backgroundColor: '#fbf1d3' }}
               icons={tableIcons}
-              title="Form-Data"
+              title="Edit form-data"
               options={{
                 search: false,
                 paging: false,

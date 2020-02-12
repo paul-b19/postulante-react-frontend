@@ -28,7 +28,7 @@ class Auth extends React.Component {
 
     return (
       <Fragment>
-        <h4><FontAwesomeIcon icon="cogs" /> Authorization</h4>
+        <h4><FontAwesomeIcon icon="cog" /> Authorization</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-outline-primary active">
             <input type="radio" name="auth_tabs" value="noAuth"
@@ -50,7 +50,7 @@ class Auth extends React.Component {
             <MaterialTable
               style={{ backgroundColor: '#fbf1d3' }}
               icons={tableIcons}
-              title="Authorization"
+              title="Edit api key"
               options={{
                 search: false,
                 paging: false,

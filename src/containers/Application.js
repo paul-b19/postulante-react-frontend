@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { setCollection, setRequestTitle, selectMethod, setUrl, 
-         updateAttribs, updateBodies, updateResponse } from '../actions'
+         updateAttribs, updateBodies, updateResponse, 
+         updateResponseStatus, updateResponseStatusText } from '../actions'
 import NavBar from '../components/NavBar'
 import About from '../components/About'
 import Response from '../components/Response'
@@ -29,6 +30,8 @@ class Application extends React.Component {
           this.props.setCollection(this.props.collections.find(collection => 
             collection.id == data.collection_id))
           this.props.updateResponse('Response will be rendered here')
+          this.props.updateResponseStatus(null)
+          this.props.updateResponseStatusText(null)
         })
     :
       this.props.setRequestTitle('Untitled')
@@ -37,6 +40,8 @@ class Application extends React.Component {
       this.props.updateAttribs([])
       this.props.updateBodies([])
       this.props.updateResponse('Response will be rendered here')
+      this.props.updateResponseStatus(null)
+      this.props.updateResponseStatusText(null)
   }
   
   render () {
@@ -71,7 +76,9 @@ const mapDispatchToProps = dispatch => {
     setUrl: (data) => dispatch(setUrl(data)),
     updateAttribs: (data) => dispatch(updateAttribs(data)),
     updateBodies: (data) => dispatch(updateBodies(data)),
-    updateResponse: (data) => dispatch(updateResponse(data))
+    updateResponse: (data) => dispatch(updateResponse(data)),
+    updateResponseStatus: (data) => dispatch(updateResponseStatus(data)),
+    updateResponseStatusText: (data) => dispatch(updateResponseStatusText(data))
   }
 }
 

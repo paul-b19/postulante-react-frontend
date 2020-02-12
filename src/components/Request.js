@@ -208,6 +208,7 @@ const Request = (props) => {
     console.log('body', body)
     console.log('finalBody', finalBody)
     props.updateResponseStatus('spin')
+    props.updateResponseStatusText(null)
 
     fetch(finalUrl, {
       method: props.method,
