@@ -20,7 +20,7 @@ class Headers extends React.Component {
   
     return (
       <Fragment>
-        <h4><FontAwesomeIcon icon="cog" /> Headers</h4>
+        <h4 style={{ paddingLeft: "8px" }}><FontAwesomeIcon icon="cog" /> Headers</h4>
         <div style={{ maxWidth: "100%" }}>
           <MaterialTable
             style={{ backgroundColor: '#fbf1d3' }}

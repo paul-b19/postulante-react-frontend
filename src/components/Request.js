@@ -10,34 +10,29 @@ import dJSON from 'dirty-json'
 const Request = (props) => {
 
   const handleCollection = e => {
-    console.log('set collection', JSON.parse(e.target.value))
+    // console.log('set collection', JSON.parse(e.target.value))
     props.setCollection(JSON.parse(e.target.value))
   }
 
   // resetting Store state to default values
   const handleNewRequest = () => {
-    console.log('New Request')
     props.setRequestId(null)
   }
 
   const handleRequestTitle = e => {
-    console.log(e.target.value)
     props.setRequestTitle(e.target.value)
   }
 
   const handleUrl = e => {
-    console.log(e.target.value)
     props.setUrl(e.target.value)
   }
 
   const handleMethod = e => {
-    console.log(e.target.value)
     props.selectMethod(e.target.value)
   }
 
   // switching tabs Params/Auth/Headers/Body
   const handleTab = e => {
-    console.log(e.target.value)
     props.switchRequestTab(e.target.value)
   }
 
@@ -68,7 +63,7 @@ const Request = (props) => {
       .then(data => {
         updateReqAttribs(data.id)
         updateReqBodies(data.id)
-        setTimeout(() => {             // <-- ????
+        setTimeout(() => { 
           props.setRequestId(data.id)
         }, 500)
         // props.setRequestId(data.id) // <-- ????
@@ -104,7 +99,7 @@ const Request = (props) => {
         console.log('updRequests', updRequests)
         props.updateRequests(updRequests)
 
-        setTimeout(() => {             // <-- ????
+        setTimeout(() => { 
           props.setRequestId(reqId)
         }, 500)
         // props.setRequestId(reqId)   // <-- ????
@@ -199,10 +194,6 @@ const Request = (props) => {
     })
   }
 
-  // setTimeout(() => {
-    
-  // }, 1000)
-
   // sending request (called on Send button click)
   const handleSend = () => {
     console.log('body', body)
@@ -231,13 +222,6 @@ const Request = (props) => {
       props.updateResponse(error)
     })
   }
-  // const handleSend = () => {
-  //   if (props.method === 'GET' || props.method === 'DELETE') {
-  //     fetchGet()
-  //   } else if (props.method === 'POST' || props.method === 'PUT' || props.method === 'PATCH') {
-  //     fetchPost()
-  //   }
-  // }
 
   // preparing data for request
   const auth = props.attribs.find( ({attr_type, for_deletion}) => 
@@ -295,76 +279,55 @@ const Request = (props) => {
   )
   const finalBody = body && dJSON.parse(body.raw_body)
 
-
-  // // GET, DELETE requests (called from handleSend())
-  // const fetchGet = () => {
-  //   fetch(finalUrl, {
-  //     method: props.method
-  //   })
-  //   .then(resp => resp.json())
-  //   .then(data => {
-  //     console.log(data)
-  //     props.updateResponse(data)
-  //   })
-  // }
-
-  // // POST, PUT, PATCH requests (called from handleSend())
-  // const fetchPost = () => {
-  //   console.log('body', body)
-  //   console.log('finalBody', finalBody)
-
-  //   fetch(finalUrl, {
-  //     method: props.method,
-  //     headers: finalHeaders,
-  //     body: JSON.stringify(finalBody)
-  //   })
-  //   .then(resp => resp.json())
-  //   .then(data => {
-  //     console.log(data)
-  //     props.updateResponse(data)
-  //   })
-  // }
-
   return (
     <Fragment>
-      <ul className="nav nav-pills">
-        <li className="nav-item">
+      {/***  request title, collection, new request  ***/}
+      <div className="pb-2 d-flex bd-highlight">
+        <div className="flex-grow-1 bd-highlight">
           {!props.titleEdit ? 
-            <h5 onClick={props.handleTitleEdit}>{props.requestTitle}</h5>
+            <h5 onClick={props.handleTitleEdit} className="pt-1 pb-1 mb-0">
+              <FontAwesomeIcon icon="pen" />  {props.requestTitle}
+            </h5>
           :
-            <div className="input-group mb-3">
+            <div className="input-group">
               <div className="title-input">
-                <input type="text" className="form-control" id="requestTitle"
+                <input type="text" className="form-control url-input" id="requestTitle"
                        value={props.requestTitle} onChange={handleRequestTitle} />
               </div>
               <div className="input-group-append">
-                <span onClick={props.handleTitleEdit} className="input-group-text">Done</span>
+                <button onClick={props.handleTitleEdit} type="button" className="btn btn-primary">
+                  <FontAwesomeIcon icon="check" />
+                </button>
               </div>
             </div>
           }
-        </li>
-        {/***  selecting request collection  ***/}
-        <li className="nav-item">
-          <div className="form-group">
-            <select onChange={handleCollection} value={JSON.stringify(props.collection)} className="custom-select">
+        </div>
+        {/**  selecting request collection  **/}
+        <div className="bd-highlight">
+          <h5 className="pt-1 pb-1 mb-0 d-none d-sm-block">Collection: </h5>
+        </div>
+        <div className="bd-highlight">
+          <div className="form-group mb-0">
+            <select onChange={handleCollection} value={JSON.stringify(props.collection)} className="custom-select url-input">
               {props.collections.map(collection => 
                 <option key={collection.id} value={JSON.stringify(collection)}>{collection.name}</option>
               )}
             </select>
            </div>
-        </li>
-        {/***  new request  ***/}
-        <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary" onClick={handleNewRequest}>
-            <FontAwesomeIcon icon="plus" /> New Request
+        </div>
+        {/**  new request  **/}
+        <div className="bd-highlight">
+          <button type="button" className="btn btn-outline-primary btn-block" onClick={handleNewRequest}>
+            <FontAwesomeIcon icon="plus" /> <span className="d-none d-sm-inline"> New Request </span>
           </button>
-        </li>
-      </ul>
+        </div>
+      </div>
+
       {/***  request form  ***/}
-      <ul className="nav nav-pills">
-        <li className="nav-item">
-          <div className="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">{props.method}</button>
+      <div className="pb-2 d-flex bd-highlight">
+        <div className="bd-highlight">
+          <div className="btn-group btn-block" role="group">
+            <button type="button" className="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">{props.method}</button>
             <div className="dropdown-menu">
               <button onClick={handleMethod} className="dropdown-item" value="GET">GET</button>
               <button onClick={handleMethod} className="dropdown-item" value="POST">POST</button>
@@ -373,26 +336,27 @@ const Request = (props) => {
               <button onClick={handleMethod} className="dropdown-item" value="DELETE">DELETE</button>
             </div>
           </div>
-        </li>
-        <li className="nav-item">
+        </div>
+        <div className="flex-grow-1 bd-highlight">
           <div className="url-input">
             <input type="text" className="form-control" placeholder="url" id="url"
                    value={props.url} onChange={handleUrl} />
           </div>
-        </li>
-        <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary" onClick={handleSend}>
-            <FontAwesomeIcon icon="bolt" /> Send
+        </div>
+        <div className="bd-highlight">
+          <button type="button" className="btn btn-outline-primary btn-block" onClick={handleSend}>
+            <FontAwesomeIcon icon="bolt" /> <span className="d-none d-sm-inline"> Send </span>
           </button>
-        </li>
-        <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary" onClick={handleSave}>
-            <FontAwesomeIcon icon="save" /> Save
+        </div>
+        <div className="bd-highlight">
+          <button type="button" className="btn btn-outline-primary btn-block" onClick={handleSave}>
+            <FontAwesomeIcon icon="save" /> <span className="d-none d-sm-inline"> Save </span>
           </button>
-        </li>
-      </ul>
+        </div>
+      </div>
 
-      <div className="btn-group btn-group-toggle" data-toggle="buttons">
+      {/***  attributes tabs  ***/}
+      <div className="btn-group btn-group-toggle pb-2" data-toggle="buttons">
         <label className="btn btn-outline-primary">
           <input type="radio" name="tabs" value="params" 
                  onChange={handleTab} checked={props.requestTab === 'params'}

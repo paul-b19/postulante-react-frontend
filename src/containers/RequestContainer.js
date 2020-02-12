@@ -43,7 +43,7 @@ class RequestContainer extends React.Component {
 
     return (
       <div className="reqCont">
-        <h3><FontAwesomeIcon icon="quote-left" /> Request</h3>
+        <h3 className="p-2"><FontAwesomeIcon icon="quote-left" /> Request</h3>
         <Request titleEdit={this.state.titleEdit}
                  handleTitleEdit={this.handleTitleEdit} />
         {tab}

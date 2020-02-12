@@ -28,7 +28,7 @@ class Auth extends React.Component {
 
     return (
       <Fragment>
-        <h4><FontAwesomeIcon icon="cog" /> Authorization</h4>
+        <h4 style={{ paddingLeft: "8px" }}><FontAwesomeIcon icon="cog" /> Authorization</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-outline-primary active">
             <input type="radio" name="auth_tabs" value="noAuth"
