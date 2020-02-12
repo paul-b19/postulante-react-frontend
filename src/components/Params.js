@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { updateAttribs } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Params extends React.Component {
 
@@ -19,7 +20,7 @@ class Params extends React.Component {
   
     return (
       <Fragment>
-        <h4>Params</h4>
+        <h4><FontAwesomeIcon icon="cogs" /> Params</h4>
         <div style={{ maxWidth: "100%" }}>
           <MaterialTable
             style={{ backgroundColor: '#fbf1d3' }}

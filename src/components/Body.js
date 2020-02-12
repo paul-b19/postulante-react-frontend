@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { updateBodies } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AceEditor from "react-ace"
 import "ace-builds/src-noconflict/mode-javascript"
 import "ace-builds/src-noconflict/mode-json5"
@@ -71,7 +71,7 @@ class Body extends React.Component {
 
     return (
       <Fragment>
-        <h4>Body</h4>
+        <h4><FontAwesomeIcon icon="cogs" /> Body</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-outline-primary active">
             <input type="radio" name="body-tabs" value="None" 

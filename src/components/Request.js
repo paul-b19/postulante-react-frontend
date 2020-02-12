@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { setCollection, updateRequests, setRequestId, setRequestTitle, 
          selectMethod, setUrl, switchRequestTab, updateAttribs, 
-         updateBodies, updateResponse } from  '../actions'
+         updateBodies, updateResponse, updateResponseStatus, 
+         updateResponseStatusText } from  '../actions'
 import dJSON from 'dirty-json'
 
 const Request = (props) => {
@@ -197,17 +199,28 @@ const Request = (props) => {
     })
   }
 
-  // called on Send button click
+  // setTimeout(() => {
+    
+  // }, 1000)
+
+  // sending request (called on Send button click)
   const handleSend = () => {
     console.log('body', body)
     console.log('finalBody', finalBody)
+    props.updateResponseStatus('spin')
 
     fetch(finalUrl, {
       method: props.method,
       headers: finalHeaders,
       body: JSON.stringify(finalBody)
     })
-    .then(resp => resp.json())
+    .then(resp => {
+      console.log(resp)
+      console.log('rs: ', resp.status, 'rst: ', resp.statusText)
+      resp.status ? props.updateResponseStatus(resp.status) : props.updateResponseStatus(null)
+      resp.statusText && props.updateResponseStatusText(resp.statusText)
+      return resp.json()
+    })
     .then(data => {
       console.log(data)
       props.updateResponse(data)
@@ -341,9 +354,9 @@ const Request = (props) => {
         </li>
         {/***  new request  ***/}
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary"
-                  onClick={handleNewRequest}>
-            New Request</button>
+          <button type="button" className="btn btn-outline-primary" onClick={handleNewRequest}>
+            <FontAwesomeIcon icon="plus" /> New Request
+          </button>
         </li>
       </ul>
       {/***  request form  ***/}
@@ -367,12 +380,14 @@ const Request = (props) => {
           </div>
         </li>
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary"
-                  onClick={handleSend}>Send</button>
+          <button type="button" className="btn btn-outline-primary" onClick={handleSend}>
+            <FontAwesomeIcon icon="bolt" /> Send
+          </button>
         </li>
         <li className="nav-item">
-          <button type="button" className="btn btn-outline-primary"
-                  onClick={handleSave}>Save</button>
+          <button type="button" className="btn btn-outline-primary" onClick={handleSave}>
+            <FontAwesomeIcon icon="save" /> Save
+          </button>
         </li>
       </ul>
 
@@ -434,7 +449,9 @@ const mapDispatchToProps = dispatch => {
     updateAttribs: (data) => dispatch(updateAttribs(data)),
     updateBodies: (data) => dispatch(updateBodies(data)),
     switchRequestTab: (data) => dispatch(switchRequestTab(data)),
-    updateResponse: (data) => dispatch(updateResponse(data))
+    updateResponse: (data) => dispatch(updateResponse(data)),
+    updateResponseStatus: (data) => dispatch(updateResponseStatus(data)),
+    updateResponseStatusText: (data) => dispatch(updateResponseStatusText(data))
   }
 }
 

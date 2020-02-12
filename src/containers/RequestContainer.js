@@ -6,6 +6,7 @@ import Params from '../components/Params'
 import Auth from '../components/Auth'
 import Headers from '../components/Headers'
 import Body from '../components/Body'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class RequestContainer extends React.Component {
 
@@ -42,7 +43,7 @@ class RequestContainer extends React.Component {
 
     return (
       <div className="reqCont">
-        <h3>Request Container</h3>
+        <h3><FontAwesomeIcon icon="quote-left" /> Request</h3>
         <Request titleEdit={this.state.titleEdit}
                  handleTitleEdit={this.handleTitleEdit} />
         {tab}

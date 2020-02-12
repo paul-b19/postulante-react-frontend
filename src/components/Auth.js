@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { updateAttribs } from '../actions'
 import MaterialTable from 'material-table'
 import tableIcons from './MTcomponents'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Auth extends React.Component {
 
@@ -27,7 +28,7 @@ class Auth extends React.Component {
 
     return (
       <Fragment>
-        <h4>Authorization</h4>
+        <h4><FontAwesomeIcon icon="cogs" /> Authorization</h4>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-outline-primary active">
             <input type="radio" name="auth_tabs" value="noAuth"

@@ -4,10 +4,12 @@ import SideBar from './components/SideBar'
 import Application from './containers/Application'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
-         faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+         faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
+         faQuoteLeft, faQuoteRight, faCogs, faBolt, faSave, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
 
 library.add( faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
-             faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt )
+             faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
+             faQuoteLeft, faQuoteRight, faCogs, faBolt, faSave, faSyncAlt )
 
 
 function App() {

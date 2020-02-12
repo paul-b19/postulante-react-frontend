@@ -12,7 +12,6 @@ let defaultState = {
   bodies: [],
   requestTab: 'params',
   response: 'Response will be rendered here',
-
   responseStatus: null,
   responseStatusText: null
 }
