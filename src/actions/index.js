@@ -1,7 +1,14 @@
-export function setUser(data) {
+export function setComponent(component) {
   return {
-    type: 'SET_USER',
-    payload: data
+    type: 'SET_USER_ID',
+    payload: component
+  }
+}
+
+export function setUserId(userId) {
+  return {
+    type: 'SET_USER_ID',
+    payload: userId
   }
 }
 

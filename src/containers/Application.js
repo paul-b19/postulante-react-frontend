@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { setCollection, setRequestTitle, selectMethod, setUrl, 
          updateAttribs, updateBodies, updateResponse, 
          updateResponseStatus, updateResponseStatusText } from '../actions'
+import SideBar from '../components/SideBar'
 import NavBar from '../components/NavBar'
-import About from '../components/About'
 import Response from '../components/Response'
 import RequestContainer from './RequestContainer'
 
@@ -48,11 +48,13 @@ class Application extends React.Component {
 
     return(
       <Fragment>
-        <div id="page-content-wrapper">
-          <About />
-          <NavBar />
-          <RequestContainer />
-          <Response />
+        <div className="d-flex" id="wrapper">
+          <SideBar />
+          <div id="page-content-wrapper">
+            <NavBar />
+            <RequestContainer />
+            <Response />
+          </div>
         </div>
       </Fragment>
     )

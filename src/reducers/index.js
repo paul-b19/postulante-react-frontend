@@ -1,5 +1,6 @@
 let defaultState = {
-  userId: 10, 
+  component: 'login',  // 'signup', 'account'
+  userId: null,   // <-- 10
   collections: [],
   collection: '',  // <-- collection object
   requests: [],
@@ -18,8 +19,15 @@ let defaultState = {
 
 const globalReducer = (prevState = defaultState, action) => {
   switch(action.type) {
+    case 'SET_COMPONENT':
+      return {...prevState,
+        component: action.payload
+      }
+    case 'SET_USER_ID':
+      return {...prevState,
+        userId: action.payload
+      }
     case 'UPDATE_COLLECTIONS':
-      // console.log(action.payload.collections)
       return {...prevState,
         collections: action.payload
       }

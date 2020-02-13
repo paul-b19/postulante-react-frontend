@@ -309,7 +309,7 @@ const Request = (props) => {
         <div className="bd-highlight">
           <div className="form-group mb-0">
             <select onChange={handleCollection} value={JSON.stringify(props.collection)} className="custom-select url-input">
-              {props.collections.map(collection => 
+              {props.collections && props.collections.map(collection => 
                 <option key={collection.id} value={JSON.stringify(collection)}>{collection.name}</option>
               )}
             </select>
@@ -357,7 +357,7 @@ const Request = (props) => {
 
       {/***  attributes tabs  ***/}
       <div className="btn-group btn-group-toggle pb-2" data-toggle="buttons">
-        <label className="btn btn-outline-primary">
+        <label className="btn btn-outline-primary active">
           <input type="radio" name="tabs" value="params" 
                  onChange={handleTab} checked={props.requestTab === 'params'}
                  onClick={handleTab} />

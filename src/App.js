@@ -1,28 +1,47 @@
 import React from 'react'
-// import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
-import SideBar from './components/SideBar'
+import { connect } from 'react-redux'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import LogIn from './containers/Login'
+import SignUp from './containers/Signup'
+import Docs from './containers/Docs'
 import Application from './containers/Application'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
-         faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
+         faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, faSignInAlt, 
          faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, 
          faSyncAlt, faDatabase, faGem, faTable, faHandSpock, 
-         faPen } from '@fortawesome/free-solid-svg-icons'
+         faPen, faUser } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add( faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
-             faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, 
+             faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, faSignInAlt, 
              faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, faSyncAlt, 
-             faDatabase, faGem, faTable, faHandSpock, faPen, fab )
+             faDatabase, faGem, faTable, faHandSpock, faPen, faUser, fab )
 
 
-function App() {
+function App (props) {
   return (
-    <div className="d-flex" id="wrapper">
-      <SideBar />
-      <Application />
-    </div>
+    <Router>
+      <Switch>
+        <Route path='/' exact component={LogIn} />
+        <Route path='/signup' component={SignUp} />
+        <Route path="/account" render={() => props.userId ? 
+          <Application />
+          :
+          <Redirect to="/" />}/>
+        <Route path='/docs' component={Docs} />
+        <Route render={() => <h1 className="text-center pt-5">There's no such route...</h1>} />
+      </Switch>
+    </Router>
   )
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    userId: state.userId
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(App)

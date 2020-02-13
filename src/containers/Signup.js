@@ -1,14 +1,15 @@
 import React from 'react'
-import{ connect } from 'react-redux'
-import { setUserId } from '../actions'
+import { connect } from 'react-redux'
+import { setUserId } from  '../actions'
 import NavBar from '../components/NavBar'
 import logo from '../images/logo_sq.png'
 
-class LogIn extends React.Component {
+class SignUp extends React.Component {
 
   state = {
     username: '',
-    password: ''
+    password: '',
+    passwordConf: ''
   }
 
   componentDidMount() {
@@ -30,25 +31,29 @@ class LogIn extends React.Component {
 
   handleSubmit = e => {
     console.log('submit')
-    fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
+    if (this.state.password === this.state.passwordConf) {
+      fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        })
       })
-    })
-    .then(resp => resp.json())
-    .then(response => {
-      if (response.errors) {
-        alert(response.errors)
-      } else {
-        this.props.setUserId(response.id)
-        localStorage.userId = response.id
-      }
-    })
+      .then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          alert(response.errors)
+        } else {
+          this.props.setUserId(response.id)
+          localStorage.userId = response.id
+        }
+      }) 
+    } else {
+      alert("Passwords don't match!")
+    }
   }
 
   render() {
@@ -67,10 +72,16 @@ class LogIn extends React.Component {
                    onChange={this.handleChange} value={this.state.username}/>
           </div>
     
-          <div className="form-group mb-4 col-12">
+          <div className="form-group mb-2 col-12">
             <label className="col-form-label">Password</label>
             <input type="password" className="form-control" name="password" 
                    onChange={this.handleChange} value={this.state.password}/>
+          </div>
+
+          <div className="form-group mb-4 col-12">
+            <label className="col-form-label">Confirm password</label>
+            <input type="password" className="form-control" name="passwordConf" 
+                   onChange={this.handleChange} value={this.state.passwordConf}/>
           </div>
   
           <div className="form-group text-center col-12">
@@ -98,4 +109,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LogIn)
+)(SignUp)

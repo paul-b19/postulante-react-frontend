@@ -18,7 +18,7 @@ class SideBar extends React.Component {
       .then(data => {
         console.log(data)
         this.props.updateCollections(data.collections)
-        this.props.setCollection(this.props.collections.find(i => i))
+        this.props.collections && this.props.setCollection(this.props.collections.find(i => i))
         this.props.updateRequests(data.requests)
       })
   }
@@ -126,7 +126,7 @@ class SideBar extends React.Component {
 
             {/***  requests collections  ***/}
             <div id="accordion" role="tablist" aria-multiselectable="true">
-              {this.props.collections.length && this.props.collections.map((collection, idx) =>
+              {this.props.collections && this.props.collections.length && this.props.collections.map((collection, idx) =>
                 <div className="card" key={idx}>
                   <h6 className="card-header" role="tab">
                     <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
