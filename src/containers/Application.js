@@ -64,7 +64,6 @@ class Application extends React.Component {
 const mapStateToProps = state => {
   return {
     // userId: state.userId,
-    // method: state.method,
     collections: state.collections,
     requestId: state.requestId
   }

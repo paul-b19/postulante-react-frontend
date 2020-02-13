@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setUserId } from  '../actions'
+import { setUserId, setComponent } from  '../actions'
 import NavBar from '../components/NavBar'
 import logo from '../images/logo_sq.png'
 
@@ -49,11 +49,17 @@ class SignUp extends React.Component {
         } else {
           this.props.setUserId(response.id)
           localStorage.userId = response.id
+          this.props.setComponent('account')
         }
       }) 
     } else {
       alert("Passwords don't match!")
     }
+  }
+
+  handleSwitch = () => {
+    this.props.setComponent('login')
+    this.props.history.push('/')
   }
 
   render() {
@@ -85,7 +91,8 @@ class SignUp extends React.Component {
           </div>
   
           <div className="form-group text-center col-12">
-            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Log In</button>
+            <button type="button" className="btn btn-primary mx-2" onClick={this.handleSubmit}>Submit</button>
+            <button type="button" className="btn btn-primary mx-2" onClick={this.handleSwitch}>Back to Log In</button>
           </div>
     
         </div>
@@ -102,6 +109,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setComponent: (data) => dispatch(setComponent(data)),
     setUserId: (data) => dispatch(setUserId(data))
   }
 }

@@ -17,28 +17,7 @@ const NavBar  = (props) => {
     props.setUserId(null)
     props.setComponent('login')
     localStorage.removeItem('userId')
-  }
-
-  const logInOut = () => {
-    if (props.component === 'account') {
-      return (
-        <a className="nav-link" href="/" onClick={handleLogOut}>
-          <h6 className="mb-0"><FontAwesomeIcon icon="sign-out-alt" /> Log Out</h6>
-        </a>
-      )
-    } else if (props.component === 'login') {
-      return (
-        <a className="nav-link" href="/signup" onClick={props.setComponent('signup')}>
-          <h6 className="mb-0"><FontAwesomeIcon icon="user" /> Create Account</h6>
-        </a>
-      )
-    } else if (props.component === 'signup') {
-      return (
-        <a className="nav-link" href="/login" onClick={props.setComponent('login')}>
-          <h6 className="mb-0"><FontAwesomeIcon icon="sign-in-alt" /> Log In</h6>
-        </a>
-      )
-    }
+    // this.props.history.push('/')
   }
 
   return (
@@ -48,8 +27,7 @@ const NavBar  = (props) => {
         {props.component === 'account' && 
         <button onClick={handleSidebar} className="btn btn-primary" id="menu-toggle">
           <FontAwesomeIcon icon="exchange-alt" /> Collections Menu
-        </button>
-        }
+        </button>}
   
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -58,7 +36,7 @@ const NavBar  = (props) => {
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/docs">
+              <a className="nav-link" href="#">
                 <h6 className="mb-0"><FontAwesomeIcon icon="code" /> Documentation</h6>
               </a>
             </li>
@@ -67,9 +45,12 @@ const NavBar  = (props) => {
                 <h6 className="mb-0"><FontAwesomeIcon icon="question-circle" /> About</h6>
               </a>
             </li>
+            {props.component === 'account' && 
             <li className="nav-item">
-              {logInOut()}
-            </li>
+              <a className="nav-link" href="/" onClick={handleLogOut}>
+                <h6 className="mb-0"><FontAwesomeIcon icon="sign-out-alt" /> Log Out</h6>
+              </a>
+            </li>}
           </ul>
         </div>
       </nav>

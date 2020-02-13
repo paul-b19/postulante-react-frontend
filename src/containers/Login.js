@@ -1,6 +1,6 @@
 import React from 'react'
 import{ connect } from 'react-redux'
-import { setUserId } from '../actions'
+import { setUserId, setComponent } from '../actions'
 import NavBar from '../components/NavBar'
 import logo from '../images/logo_sq.png'
 
@@ -47,8 +47,14 @@ class LogIn extends React.Component {
       } else {
         this.props.setUserId(response.id)
         localStorage.userId = response.id
+        this.props.setComponent('account')
       }
     })
+  }
+
+  handleSwitch = () => {
+    this.props.setComponent('signup')
+    this.props.history.push('/signup')
   }
 
   render() {
@@ -74,7 +80,8 @@ class LogIn extends React.Component {
           </div>
   
           <div className="form-group text-center col-12">
-            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Log In</button>
+            <button type="button" className="btn btn-primary mx-2" onClick={this.handleSubmit}>Log In</button>
+            <button type="button" className="btn btn-primary mx-2" onClick={this.handleSwitch}>Sign Up</button>
           </div>
     
         </div>
@@ -91,6 +98,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setComponent: (data) => dispatch(setComponent(data)),
     setUserId: (data) => dispatch(setUserId(data))
   }
 }

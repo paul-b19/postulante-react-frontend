@@ -1,6 +1,6 @@
 export function setComponent(component) {
   return {
-    type: 'SET_USER_ID',
+    type: 'SET_COMPONENT',
     payload: component
   }
 }
