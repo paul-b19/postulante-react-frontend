@@ -10,13 +10,13 @@ import { faChevronRight, faChevronDown, faPlus, faCheck, faTimes,
          faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, faSignInAlt, 
          faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, 
          faSyncAlt, faDatabase, faGem, faTable, faHandSpock, 
-         faPen, faUser } from '@fortawesome/free-solid-svg-icons'
+         faPen, faTrashAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
 library.add( faChevronRight, faChevronDown, faPlus, faCheck, faTimes, 
              faCode, faQuestionCircle, faExchangeAlt, faSignOutAlt, faSignInAlt, 
              faQuoteLeft, faQuoteRight, faCog, faBolt, faSave, faSyncAlt, 
-             faDatabase, faGem, faTable, faHandSpock, faPen, faUser, fab )
+             faDatabase, faGem, faTable, faHandSpock, faPen, faUser, faTrashAlt, fab )
 
 
 function App (props) {

@@ -12,6 +12,7 @@ class LogIn extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setComponent('login')
     localStorage.userId && this.props.setUserId(localStorage.userId)
   }
 

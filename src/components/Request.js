@@ -285,7 +285,7 @@ const Request = (props) => {
       <div className="pb-2 d-flex bd-highlight">
         <div className="flex-grow-1 bd-highlight">
           {!props.titleEdit ? 
-            <h5 onClick={props.handleTitleEdit} className="pt-1 pb-1 mb-0">
+            <h5 onClick={props.handleTitleEdit} className="pl-2 pt-1 pb-1 mb-0">
               <FontAwesomeIcon icon="pen" />  {props.requestTitle}
             </h5>
           :

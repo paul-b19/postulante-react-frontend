@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setCollection, setRequestTitle, selectMethod, setUrl, 
-         updateAttribs, updateBodies, updateResponse, 
+import { setComponent, setCollection, setRequestTitle, selectMethod, 
+         setUrl, updateAttribs, updateBodies, updateResponse, 
          updateResponseStatus, updateResponseStatusText } from '../actions'
 import SideBar from '../components/SideBar'
 import NavBar from '../components/NavBar'
@@ -10,6 +10,10 @@ import RequestContainer from './RequestContainer'
 
 
 class Application extends React.Component {
+
+  componentDidMount() {
+    this.props.setComponent('account')
+  }
 
   componentDidUpdate() {
     console.log('Application.js fetching request with id: ', this.props.requestId)
@@ -63,6 +67,7 @@ class Application extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    // component: state.component,
     // userId: state.userId,
     collections: state.collections,
     requestId: state.requestId
@@ -71,6 +76,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setComponent: (data) => dispatch(setComponent(data)),
     setCollection: (data) => dispatch(setCollection(data)),
     setRequestTitle: (data) => dispatch(setRequestTitle(data)),
     selectMethod: (data) => dispatch(selectMethod(data)),

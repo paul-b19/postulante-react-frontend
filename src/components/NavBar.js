@@ -36,7 +36,7 @@ const NavBar  = (props) => {
         <div className="collapse navbar-collapse" id="navbarColor01">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/docs">
                 <h6 className="mb-0"><FontAwesomeIcon icon="code" /> Documentation</h6>
               </a>
             </li>

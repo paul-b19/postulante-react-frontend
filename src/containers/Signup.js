@@ -13,6 +13,7 @@ class SignUp extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setComponent('signup')
     localStorage.userId && this.props.setUserId(localStorage.userId)
   }
 

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class SideBar extends React.Component {
 
   state = {
+    collections: [],
     newCollection: false,
     collectionName: 'New Collection'
   }
@@ -23,6 +24,18 @@ class SideBar extends React.Component {
       })
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.collections !==)
+  //   fetch(`http://localhost:3000/users/${this.props.userId}`)
+  //     .then(resp => resp.json())
+  //     .then(data => {
+  //       console.log(data)
+  //       this.props.updateCollections(data.collections)
+  //       this.props.collections && this.props.setCollection(this.props.collections.find(i => i))
+  //       this.props.updateRequests(data.requests)
+  //     })
+  // }
+
   handleSearch = e => {
     console.log('search', e.target.value)
     this.props.updateSearch(e.target.value)
@@ -37,6 +50,22 @@ class SideBar extends React.Component {
   handleCancelCollection = () => {
     this.setState({
       newCollection: false
+    })
+  }
+
+  handleDeleteCollection = (collection) => {
+    console.log('deleting collection')
+    fetch(`http://localhost:3000/collections/${collection.id}`, {
+      method: 'DELETE'
+    },() => {
+      const data = this.props.collections
+      const index = data.indexOf(collection)
+      data.splice(index, 1)
+      this.props.updateCollections(data)
+      // this.props.setRequestId(null)                
+      this.setState({ 
+        collections: data
+      })
     })
   }
 
@@ -130,7 +159,8 @@ class SideBar extends React.Component {
                 <div className="card" key={idx}>
                   <h6 className="card-header" role="tab">
                     <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
-                      {collection.name} <FontAwesomeIcon icon="chevron-down" className="chevron-down pull-right" />
+                      <FontAwesomeIcon onClick={() => this.handleDeleteCollection(collection)} icon="trash-alt" /> 
+                      {collection.name} <FontAwesomeIcon icon="chevron-down" className="chevron-down float-right" />
                     </a>
                   </h6>
                   <div id={`collapse${idx}`} className="list-group-flush collapse" role="tabpanel" aria-labelledby={`heading${idx}`}>

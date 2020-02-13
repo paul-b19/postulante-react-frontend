@@ -6,8 +6,12 @@ import logo from '../images/logo_flat.png'
 
 class Docs extends React.Component {
 
+  componentDidMount() {
+    this.props.setComponent('docs')
+  }
+
   handleBack = () => {
-    this.props.setComponent('account')
+    // this.props.setComponent('account')
     this.props.history.push('/account')
   }
 
