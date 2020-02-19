@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class SideBar extends React.Component {
 
   state = {
-    collections: [],
     newCollection: false,
     collectionName: 'New Collection'
   }
@@ -23,18 +22,6 @@ class SideBar extends React.Component {
         this.props.updateRequests(data.requests)
       })
   }
-
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.collections !==)
-  //   fetch(`http://localhost:3000/users/${this.props.userId}`)
-  //     .then(resp => resp.json())
-  //     .then(data => {
-  //       console.log(data)
-  //       this.props.updateCollections(data.collections)
-  //       this.props.collections && this.props.setCollection(this.props.collections.find(i => i))
-  //       this.props.updateRequests(data.requests)
-  //     })
-  // }
 
   handleSearch = e => {
     console.log('search', e.target.value)
@@ -57,16 +44,17 @@ class SideBar extends React.Component {
     console.log('deleting collection')
     fetch(`http://localhost:3000/collections/${collection.id}`, {
       method: 'DELETE'
-    },() => {
-      const data = this.props.collections
-      const index = data.indexOf(collection)
-      data.splice(index, 1)
-      this.props.updateCollections(data)
-      // this.props.setRequestId(null)                
-      this.setState({ 
-        collections: data
-      })
     })
+      .then(() => {
+        fetch(`http://localhost:3000/users/${this.props.userId}`)
+          .then(resp => resp.json())
+          .then(data => {
+            console.log(data)
+            this.props.updateCollections(data.collections)
+            this.props.setCollection(this.props.collections.find(i => i))
+            this.props.updateRequests(data.requests)
+          })
+      })
   }
 
   handleCollectionName = e => {
@@ -158,6 +146,28 @@ class SideBar extends React.Component {
               {this.props.collections && this.props.collections.length && this.props.collections.map((collection, idx) =>
                 <div className="card" key={idx}>
                   <h6 className="card-header" role="tab">
+                    <a href="#"><FontAwesomeIcon onClick={() => this.handleDeleteCollection(collection)} icon="trash-alt" /></a>
+                    <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
+                      {` ${collection.name}`} <FontAwesomeIcon icon="chevron-down" className="chevron-down float-right" />
+                    </a>
+                  </h6>
+                  <div id={`collapse${idx}`} className="list-group-flush collapse" role="tabpanel" aria-labelledby={`heading${idx}`}>
+                    {this.props.requests.length && this.props.requests.map(request => 
+                      request.collection_id === collection.id &&
+                      <a key={request.id} id={request.id} href="#" onClick={this.handleRequestId} 
+                         className="list-group-item list-group-item-action bg-light">
+                        {request.title}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* <div id="accordion" role="tablist" aria-multiselectable="true">
+              {this.props.collections && this.props.collections.length && this.props.collections.map((collection, idx) =>
+                <div className="card" key={idx}>
+                  <h6 className="card-header" role="tab">
                     <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
                       <FontAwesomeIcon onClick={() => this.handleDeleteCollection(collection)} icon="trash-alt" /> 
                       {collection.name} <FontAwesomeIcon icon="chevron-down" className="chevron-down float-right" />
@@ -174,7 +184,7 @@ class SideBar extends React.Component {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
 
           </div>
         }
