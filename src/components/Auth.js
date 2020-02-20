@@ -13,7 +13,6 @@ class Auth extends React.Component {
   }
 
   handleAuth = e => {
-    console.log('Auth', e.target.value)
     this.setState({
       auth: e.target.value
     })
@@ -24,7 +23,6 @@ class Auth extends React.Component {
     let keysList = this.props.attribs.filter( attrib =>
       attrib.attr_type === 'auth' && !attrib.for_deletion
     )
-    // let paramsListX = this.state.paramsList
 
     return (
       <Fragment>
@@ -113,21 +111,6 @@ class Auth extends React.Component {
                       resolve()
                     }, 1000)
                   })
-                // onRowDelete: oldData =>
-                //   new Promise((resolve) => {
-                //     setTimeout(() => {
-                //       {
-                //         let data = this.props.attribs
-                //         const index = data.indexOf(oldData)
-                //         data.splice(index, 1)
-                //         this.props.updateAttribs(data)
-                //         this.setState({
-                //           keysList: data
-                //         }, () => resolve())
-                //       }
-                //       resolve()
-                //     }, 1000)
-                //   })
               }}
             />
           </div>

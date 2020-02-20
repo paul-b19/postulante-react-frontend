@@ -16,7 +16,6 @@ class Headers extends React.Component {
     let headersList = this.props.attribs.filter( attrib =>
       attrib.attr_type === 'headers' && !attrib.for_deletion
     )
-    // let headersListX = this.state.headersList
   
     return (
       <Fragment>
@@ -87,21 +86,6 @@ class Headers extends React.Component {
                     resolve()
                   }, 1000)
                 })
-              // onRowDelete: oldData =>
-              //   new Promise((resolve) => {
-              //     setTimeout(() => {
-              //       {
-              //         let data = this.props.attribs
-              //         const index = data.indexOf(oldData)
-              //         data.splice(index, 1)
-              //         this.props.updateAttribs(data)
-              //         this.setState({
-              //           headersList: data
-              //         }, () => resolve())
-              //       }
-              //       resolve()
-              //     }, 1000)
-              //   })
             }}
           />
         </div>

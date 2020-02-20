@@ -23,15 +23,13 @@ class LogIn extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
   handleSubmit = e => {
-    console.log('submit')
-    fetch('http://localhost:3000/login', {
+    fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

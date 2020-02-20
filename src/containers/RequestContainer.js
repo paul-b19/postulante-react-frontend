@@ -11,13 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class RequestContainer extends React.Component {
 
   state = {
-    // method: 'GET', // 'POST'/'PUT'/'PATCH'/'DELETE'
-    // tab: 'params' // 'authorization'/'headers'/'body'
     titleEdit: false
   }
 
   handleTitleEdit = () => {
-    console.log('title edit')
     this.setState({
       titleEdit: !this.state.titleEdit
     })
@@ -54,17 +51,12 @@ class RequestContainer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    // userId: state.userId,
-    // requestId: state.requestId,
-    // method: state.method,
     requestTab: state.requestTab
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    // setRequestId: (data) => dispatch(setRequestId(data)),
-    // selectMethod: (data) => dispatch(selectMethod(data)),
     switchRequestTab: (data) => dispatch(switchRequestTab(data))
   }
 }

@@ -18,15 +18,13 @@ class Body extends React.Component {
     rawBody: ''
   }
 
-  handleBody = (e) => {
-    console.log(e.target.value)
+  handleBody = e => {
     this.setState({
       body: e.target.value
     })
   }
 
   handleEditor = (newValue) => {
-    console.log("editor new value", newValue)
     let rawBody = this.props.bodies.find( ({body_type}) =>
       body_type === 'Raw'
     )

@@ -10,7 +10,6 @@ import dJSON from 'dirty-json'
 const Request = (props) => {
 
   const handleCollection = e => {
-    // console.log('set collection', JSON.parse(e.target.value))
     props.setCollection(JSON.parse(e.target.value))
   }
 
@@ -46,8 +45,7 @@ const Request = (props) => {
 
   // creating new request (called from handleSave)
   const createRequest = () => {
-    console.log('creating request')
-    fetch('http://localhost:3000/requests', {
+    fetch(`${process.env.REACT_APP_BASE_URL}/requests`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -65,7 +63,7 @@ const Request = (props) => {
         updateReqBodies(data.id)
         setTimeout(() => { 
           props.setRequestId(data.id)
-        }, 500)
+        }, 1000)
         // props.setRequestId(data.id) // <-- ????
         props.updateRequests([...props.requests, data])
       })
@@ -77,8 +75,7 @@ const Request = (props) => {
     updateReqAttribs(reqId)
     updateReqBodies(reqId)
     // updating request
-    console.log('updating request')
-    fetch(`http://localhost:3000/requests/${reqId}`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/requests/${reqId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -92,16 +89,13 @@ const Request = (props) => {
     })
       .then(resp => resp.json())
       .then(data => {
-        console.log(reqId)
-        console.log(data.id)
         let updRequests = [...props.requests].map(req => {
           return req.id == reqId ? data : req}) // <-- integer vs string
-        console.log('updRequests', updRequests)
         props.updateRequests(updRequests)
 
         setTimeout(() => { 
           props.setRequestId(reqId)
-        }, 500)
+        }, 1000)
         // props.setRequestId(reqId)   // <-- ????
       })
   }
@@ -111,7 +105,7 @@ const Request = (props) => {
     props.attribs.forEach(attrib => {
       // updating attrib
       if (attrib.request_id && !attrib.for_deletion) {
-        fetch(`http://localhost:3000/attribs/${attrib.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/attribs/${attrib.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -127,7 +121,7 @@ const Request = (props) => {
         })
       // creating attrib
       } else if (!attrib.request_id && !attrib.for_deletion) {
-        fetch('http://localhost:3000/attribs/', {
+        fetch(`${process.env.REACT_APP_BASE_URL}/attribs/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -142,7 +136,7 @@ const Request = (props) => {
         })
       // deleting attrib
       } else if (attrib.for_deletion) {
-        fetch(`http://localhost:3000/attribs/${attrib.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/attribs/${attrib.id}`, {
           method: 'DELETE'
         })
       }
@@ -154,7 +148,7 @@ const Request = (props) => {
     props.bodies.forEach(body => {
       // updating body
       if (body.request_id && !body.for_deletion) {
-        fetch(`http://localhost:3000/bodies/${body.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/bodies/${body.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -171,7 +165,7 @@ const Request = (props) => {
         })
       // creating body
       } else if (!body.request_id && !body.for_deletion) {
-        fetch('http://localhost:3000/bodies/', {
+        fetch(`${process.env.REACT_APP_BASE_URL}/bodies/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -187,7 +181,7 @@ const Request = (props) => {
         })
       // deleting body
       } else if (body.for_deletion) {
-        fetch(`http://localhost:3000/bodies/${body.id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/bodies/${body.id}`, {
           method: 'DELETE'
         })
       }
@@ -196,8 +190,6 @@ const Request = (props) => {
 
   // sending request (called on Send button click)
   const handleSend = () => {
-    console.log('body', body)
-    console.log('finalBody', finalBody)
     props.updateResponseStatus('spin')
     props.updateResponseStatusText(null)
 
@@ -241,7 +233,6 @@ const Request = (props) => {
         url = url + param.key + '=' + param.value + '&'
       })
       url = url.slice(0, -1)
-      console.log('finalUrl: ', url)
       return url
     } else if (params.length > 0 && auth && auth.description.toLowerCase() === 'params') {
       let url = `${props.url}?`
@@ -249,12 +240,10 @@ const Request = (props) => {
         url = url + param.key + '=' + param.value + '&'
       })
       url = url + auth.key + '=' + auth.value
-      console.log('finalUrl: ', url)
       return url
     } else if (params.length === 0 && auth && auth.description.toLowerCase() === 'params') {
       let url = `${props.url}?`
       url = url + auth.key + '=' + auth.value
-      console.log('finalUrl: ', url)
       return url
     }
   }
@@ -269,7 +258,6 @@ const Request = (props) => {
       yHeaders[i.key] = i.value
     })
     auth && auth.description.toLowerCase() === 'headers' ? yHeaders[auth.key] = auth.value : console.log(null) // <-- do not remove!
-    console.log(yHeaders)
     return yHeaders
   }
   const finalHeaders = headers()
@@ -388,7 +376,6 @@ const Request = (props) => {
 
 const mapStateToProps = state => {
   return {
-    // userId: state.userId,
     collections: state.collections,
     collection: state.collection,
     requests: state.requests,

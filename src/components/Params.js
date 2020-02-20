@@ -16,7 +16,6 @@ class Params extends React.Component {
     let paramsList = this.props.attribs.filter( attrib =>
       attrib.attr_type === 'params' && !attrib.for_deletion
     )
-    // let paramsListX = this.state.paramsList
   
     return (
       <Fragment>

@@ -24,16 +24,14 @@ class SignUp extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target.value)
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
   handleSubmit = e => {
-    console.log('submit')
     if (this.state.password === this.state.passwordConf) {
-      fetch('http://localhost:3000/signup', {
+      fetch(`${process.env.REACT_APP_BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

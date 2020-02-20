@@ -11,7 +11,6 @@ class Docs extends React.Component {
   }
 
   handleBack = () => {
-    // this.props.setComponent('account')
     this.props.history.push('/account')
   }
 
@@ -39,7 +38,6 @@ class Docs extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    // userId: state.userId,
     component: state.component
   }
 }

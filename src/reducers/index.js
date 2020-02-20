@@ -1,5 +1,5 @@
 let defaultState = {
-  component: 'login',  // 'signup', 'account'
+  component: 'login',  // 'signup', 'account', 'docs'
   userId: null,   // <-- 10
   collections: [],
   collection: '',  // <-- collection object

@@ -13,10 +13,9 @@ class SideBar extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/users/${this.props.userId}`)
+    fetch(`${process.env.REACT_APP_BASE_URL}/users/${this.props.userId}`)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
         this.props.updateCollections(data.collections)
         this.props.collections && this.props.setCollection(this.props.collections.find(i => i))
         this.props.updateRequests(data.requests)
@@ -24,7 +23,6 @@ class SideBar extends React.Component {
   }
 
   handleSearch = e => {
-    console.log('search', e.target.value)
     this.props.updateSearch(e.target.value)
   }
 
@@ -41,15 +39,13 @@ class SideBar extends React.Component {
   }
 
   handleDeleteCollection = (collection) => {
-    console.log('deleting collection')
-    fetch(`http://localhost:3000/collections/${collection.id}`, {
+    fetch(`${process.env.REACT_APP_BASE_URL}/collections/${collection.id}`, {
       method: 'DELETE'
     })
       .then(() => {
-        fetch(`http://localhost:3000/users/${this.props.userId}`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/users/${this.props.userId}`)
           .then(resp => resp.json())
           .then(data => {
-            console.log(data)
             this.props.updateCollections(data.collections)
             this.props.setCollection(this.props.collections.find(i => i))
             this.props.updateRequests(data.requests)
@@ -58,14 +54,13 @@ class SideBar extends React.Component {
   }
 
   handleCollectionName = e => {
-    console.log(e.target.value)
     this.setState({
       collectionName: e.target.value
     })
   }
 
   handleCreateCollection = () => {
-    fetch('http://localhost:3000/collections', {
+    fetch(`${process.env.REACT_APP_BASE_URL}/collections`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -76,10 +71,9 @@ class SideBar extends React.Component {
       })
     })
       .then(() => {
-        fetch(`http://localhost:3000/users/${this.props.userId}`)
+        fetch(`${process.env.REACT_APP_BASE_URL}/users/${this.props.userId}`)
           .then(resp => resp.json())
           .then(data => {
-            console.log(data)
             this.props.updateCollections(data.collections)
             this.props.setCollection(this.props.collections.find(i => i))
             this.props.updateRequests(data.requests)
@@ -93,7 +87,6 @@ class SideBar extends React.Component {
   }
 
   handleRequestId = e => {
-    console.log('set request id: ', e.target.id)
     this.props.setRequestId(e.target.id)
   }
 
@@ -163,29 +156,6 @@ class SideBar extends React.Component {
                 </div>
               )}
             </div>
-
-            {/* <div id="accordion" role="tablist" aria-multiselectable="true">
-              {this.props.collections && this.props.collections.length && this.props.collections.map((collection, idx) =>
-                <div className="card" key={idx}>
-                  <h6 className="card-header" role="tab">
-                    <a data-toggle="collapse" data-parent="#accordion" href={`#collapse${idx}`} aria-expanded="false" aria-controls={`collapse${idx}`} className="collection collapsed">
-                      <FontAwesomeIcon onClick={() => this.handleDeleteCollection(collection)} icon="trash-alt" /> 
-                      {collection.name} <FontAwesomeIcon icon="chevron-down" className="chevron-down float-right" />
-                    </a>
-                  </h6>
-                  <div id={`collapse${idx}`} className="list-group-flush collapse" role="tabpanel" aria-labelledby={`heading${idx}`}>
-                    {this.props.requests.length && this.props.requests.map(request => 
-                      request.collection_id === collection.id &&
-                      <a key={request.id} id={request.id} href="#" onClick={this.handleRequestId} 
-                         className="list-group-item list-group-item-action bg-light">
-                        {request.title}
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div> */}
-
           </div>
         }
       </div>
