@@ -48,3 +48,16 @@ Software developers, QA engineers, Project managers, Business analysts.
   </li>
 </ul>
 
+<h3>To run the app locally</h3>
+<ol>
+  <li>
+    Fork and clone
+  </li>
+  <li>
+    In root directory create <b>.env</b> file and add this local variable: <b>REACT_APP_BASE_URL=http://postulante-rails-api.herokuapp.com</b> (to use backend from heroku) or <b>REACT_APP_BASE_URL=http://localhost:3000/</b> (for local backend server)
+  </li>
+  <li>
+    In terminal from root directory run <b>npm install</b> and then <b>npm start</b>
+  </li>
+</ol>
+
